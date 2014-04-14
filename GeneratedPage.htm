@@ -1,0 +1,803 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Fareham Area Profile</title>
+<link class="include" href="css/generated_page.css" rel="stylesheet" type="text/css" />
+<link class="include" media="print" href="css/print.css" rel="stylesheet" type="text/css" />
+<!-- ********************************************************************************************************************** -->
+<!-- * You will need to include jquery.jqplot.min.css which is a stylesheet used by the charting software.                * -->
+<!-- * Put it in a sub-directory called 'css', below where this generated page is held.                                   * -->
+<!-- * You can get all the files associated with JQPlot (javascript, css) and see examples here: http://www.jqplot.com/* -->
+<!-- ********************************************************************************************************************** -->
+<link class="include" href="css/jquery.jqplot.min.css" rel="stylesheet" type="text/css" />
+<!-- ********************************************************************************************************************** -->
+<!-- * You will need to include excanvas.js which is a javascript library used by the charting software.              * -->
+<!-- * It is needed for the charting to work on pre-IE9 versions of internet explorer                                     * -->
+<!-- * Put it in a sub-directory called 'js', below where this generated page is held.                                    * -->
+<!-- * You can get all the files associated with JQPlot (javascript, css) and see examples here: http://www.jqplot.com/* -->
+<!-- ********************************************************************************************************************** -->
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="js/excanvas.js"></script><![endif]-->
+<!-- ********************************************************************************************************************** -->
+<!-- * You will need to include jquery javascript library which is needed by JQPlot for the charting to work.             * -->
+<!-- * Put it in a sub-directory called 'js', below where this generated page is held.                                    * -->
+<!-- * You can get all the files associated with JQuery and see code examples here: http://jquery.com/                 * -->
+<!-- ********************************************************************************************************************** -->
+<script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<!-- ************************************************************************************************************************ -->
+<!-- * You will need to include all these jqplot javascript libraries, which are needed by JQPlot for the charting to work. * -->
+<!-- * Put them in a sub-directory called 'js', below where this generated page is held.                                    * -->
+<!-- * You can get all the files associated with JQPlot (javascript, css) and see examples here: http://www.jqplot.com/  * -->
+<!-- ************************************************************************************************************************ -->
+<script src="js/jquery.jqplot.min.js" type="text/javascript"></script>
+<script src="js/jqplot.barRenderer.min.js" type="text/javascript"></script>
+<script src="js/jqplot.categoryAxisRenderer.min.js" type="text/javascript"></script>
+<script src="js/jqplot.pointLabels.min.js" type="text/javascript"></script>
+<script src="js/jqplot.canvasAxisTickRenderer.min.js" type="text/javascript"></script>
+<script src="js/jqplot.canvasTextRenderer.min.js" type="text/javascript"></script>
+<script src="js/jqplot.canvasAxisLabelRenderer.min.js" type="text/javascript"></script>
+<script src="js/jqplot.highlighter.min.js" type="text/javascript"></script>
+<script src="js/jqplot.pieRenderer.min.js" type="text/javascript"></script>
+<script src="js/jqplot.donutRenderer.min.js" type="text/javascript"></script>
+<!-- ********************************************************************************************************************** -->
+<!-- * You will need to include the online google maps javascript library, which is needed for GoogleMaps to work.        * -->
+<!-- * You can find out about Google Maps API here: https://developers.google.com/maps/                               * -->
+<!-- * You will also need the mapping_utils file, which makes calls to the ONS Open Geography Portal to aquire the        * -->
+<!-- * appropriate boundaries for the area and parent area picked. You can find out more about the ONS Open Geography     * -->
+<!-- * here: https://geoportal.statistics.gov.uk/geoportal/catalog/main/home.page                                   * -->
+<!-- * Put it in a sub-directory called 'js', below where this generated page is held.                                    * -->
+<!-- ********************************************************************************************************************** -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;region=GB" type="text/javascript"></script>
+<script src="js/mapping_utils.js" type="text/javascript"></script>
+<!-- ********************************************************************************************************************** -->
+<!-- * You will need to include these javascript libraries which are needed by TableSorter for the ability to click on    * -->
+<!-- * a table heading and be able to sort the table in ascending or descending order by that column.                     * -->
+<!-- * Put it in a sub-directory called 'js', below where this generated page is held.                                    * -->
+<!-- * You can get all the files associated with TableSorter here: http://tablesorter.com/docs/                        * -->
+<!-- ********************************************************************************************************************** -->
+<script src="js/tablesorter.js" type="text/javascript"></script>
+<!-- ********************************************************************************************************************** -->
+<!-- * You will need to include this css library which are needed by TableSorter for some of the styling when clicking    * -->
+<!-- * on a table heading and being able to sort the table in ascending or descending order by that column.               * -->
+<!-- * Put it in a sub-directory called 'js', below where this generated page is held.                                    * -->
+<!-- * You can get all the files associated with TableSorter here: http://tablesorter.com/docs/                        * -->
+<!-- ********************************************************************************************************************** -->
+<link class="include" href="css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/toggle.js" type="text/javascript"></script>
+<script src="js/chart_utils.js" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+// Label information for charts
+strLabs0 = "null";
+strLabs1 = "0 to 4*5 to 9*10 to 15*16 to 24*25 to 44*45 to 64*65 to 74*75 to 79*80 to 84*85 and over";
+strLabs2 = "null";
+strLabs3 = "null";
+strLabs4 = "null";
+strLabs5 = "null";
+strLabs6 = "null";
+strLabs7 = "Very good health*Good health*Fair health*Bad health*Very bad health";
+strLabs8 = "Provides no unpaid care*Provides 1 to 19 hours unpaid care a week*Provides 20 to 49 hours unpaid care a week*Provides 50 or more hours unpaid care a week";
+strLabs9 = "null";
+strLabs10 = "null";
+strLabs11 = "null";
+strLabs12 = "1 person in household*2 people in household*3 people in household*4 people in household*5 people in household*6 people in household*7 people in household*8 or more people in household";
+strLabs13 = "null";
+strLabs14 = "null";
+strLabs15 = "1. Higher managerial, administrative and professional occupations*2. Lower managerial, administrative and professional occupations*3. Intermediate occupations*4. Small employers and own account workers*5. Lower supervisory and technical occupations*6. Semi-routine occupations*7. Routine occupations*8. Never worked and long-term unemployed";
+strLabs16 = "null";
+strLabs17 = "Work mainly at or from home*Underground, metro, light rail, tram*Train*Bus, minibus or coach*Taxi*Motorcycle, scooter or moped*Driving a car or van*Passenger in a car or van*Bicycle*On foot*Other method of travel to work*Not in employment";
+// Dimension information for charts
+strKeyDim0_0 = "null";
+strKeyDim0_1 = "null";
+strKeyDim1_0 = "England and Wales*Hampshire*Fareham";
+strKeyDim1_1 = "Fareham East*Fareham North*Fareham North-West*Fareham South*Fareham West*Hill Head*Locks Heath*Park Gate*Portchester East*Portchester West*Sarisbury*Stubbington*Titchfield*Titchfield Common*Warsash";
+strKeyDim2_0 = "null";
+strKeyDim2_1 = "null";
+strKeyDim3_0 = "null";
+strKeyDim3_1 = "null";
+strKeyDim4_0 = "null";
+strKeyDim4_1 = "null";
+strKeyDim5_0 = "null";
+strKeyDim5_1 = "null";
+strKeyDim6_0 = "null";
+strKeyDim6_1 = "null";
+strKeyDim7_0 = "England and Wales*Hampshire*Fareham";
+strKeyDim7_1 = "Fareham East*Fareham North*Fareham North-West*Fareham South*Fareham West*Hill Head*Locks Heath*Park Gate*Portchester East*Portchester West*Sarisbury*Stubbington*Titchfield*Titchfield Common*Warsash";
+strKeyDim8_0 = "England and Wales*Hampshire*Fareham";
+strKeyDim8_1 = "Fareham East*Fareham North*Fareham North-West*Fareham South*Fareham West*Hill Head*Locks Heath*Park Gate*Portchester East*Portchester West*Sarisbury*Stubbington*Titchfield*Titchfield Common*Warsash";
+strKeyDim9_0 = "null";
+strKeyDim9_1 = "null";
+strKeyDim10_0 = "null";
+strKeyDim10_1 = "null";
+strKeyDim11_0 = "null";
+strKeyDim11_1 = "null";
+strKeyDim12_0 = "England and Wales*Hampshire*Fareham";
+strKeyDim12_1 = "Fareham East*Fareham North*Fareham North-West*Fareham South*Fareham West*Hill Head*Locks Heath*Park Gate*Portchester East*Portchester West*Sarisbury*Stubbington*Titchfield*Titchfield Common*Warsash";
+strKeyDim13_0 = "null";
+strKeyDim13_1 = "null";
+strKeyDim14_0 = "null";
+strKeyDim14_1 = "null";
+strKeyDim15_0 = "England and Wales*Hampshire*Fareham";
+strKeyDim15_1 = "Fareham East*Fareham North*Fareham North-West*Fareham South*Fareham West*Hill Head*Locks Heath*Park Gate*Portchester East*Portchester West*Sarisbury*Stubbington*Titchfield*Titchfield Common*Warsash";
+strKeyDim16_0 = "null";
+strKeyDim16_1 = "null";
+strKeyDim17_0 = "England and Wales*Hampshire*Fareham";
+strKeyDim17_1 = "Fareham East*Fareham North*Fareham North-West*Fareham South*Fareham West*Hill Head*Locks Heath*Park Gate*Portchester East*Portchester West*Sarisbury*Stubbington*Titchfield*Titchfield Common*Warsash";
+// Data information in format for line/bar charts
+var XstrSeriesData = [];
+XstrSeriesData[0] = [];
+XstrSeriesData[0][0] = [];
+XstrSeriesData[0][1] = [];
+XstrSeriesData[1] = [];
+XstrSeriesData[1][0] = [];
+XstrSeriesData[1][1] = [];
+XstrSeriesData[2] = [];
+XstrSeriesData[2][0] = [];
+XstrSeriesData[2][1] = [];
+XstrSeriesData[3] = [];
+XstrSeriesData[3][0] = [];
+XstrSeriesData[3][1] = [];
+XstrSeriesData[4] = [];
+XstrSeriesData[4][0] = [];
+XstrSeriesData[4][1] = [];
+XstrSeriesData[5] = [];
+XstrSeriesData[5][0] = [];
+XstrSeriesData[5][1] = [];
+XstrSeriesData[6] = [];
+XstrSeriesData[6][0] = [];
+XstrSeriesData[6][1] = [];
+XstrSeriesData[7] = [];
+XstrSeriesData[7][0] = [];
+XstrSeriesData[7][1] = [];
+XstrSeriesData[8] = [];
+XstrSeriesData[8][0] = [];
+XstrSeriesData[8][1] = [];
+XstrSeriesData[9] = [];
+XstrSeriesData[9][0] = [];
+XstrSeriesData[9][1] = [];
+XstrSeriesData[10] = [];
+XstrSeriesData[10][0] = [];
+XstrSeriesData[10][1] = [];
+XstrSeriesData[11] = [];
+XstrSeriesData[11][0] = [];
+XstrSeriesData[11][1] = [];
+XstrSeriesData[12] = [];
+XstrSeriesData[12][0] = [];
+XstrSeriesData[12][1] = [];
+XstrSeriesData[13] = [];
+XstrSeriesData[13][0] = [];
+XstrSeriesData[13][1] = [];
+XstrSeriesData[14] = [];
+XstrSeriesData[14][0] = [];
+XstrSeriesData[14][1] = [];
+XstrSeriesData[15] = [];
+XstrSeriesData[15][0] = [];
+XstrSeriesData[15][1] = [];
+XstrSeriesData[16] = [];
+XstrSeriesData[16][0] = [];
+XstrSeriesData[16][1] = [];
+XstrSeriesData[17] = [];
+XstrSeriesData[17][0] = [];
+XstrSeriesData[17][1] = [];
+// Data information in format for line/bar charts
+var XstrSeriesDataPie = [];
+XstrSeriesDataPie[0] = [];
+XstrSeriesDataPie[0][0] = [];
+XstrSeriesDataPie[0][1] = [];
+XstrSeriesDataPie[1] = [];
+XstrSeriesDataPie[1][0] = [];
+XstrSeriesDataPie[1][1] = [];
+XstrSeriesDataPie[2] = [];
+XstrSeriesDataPie[2][0] = [];
+XstrSeriesDataPie[2][1] = [];
+XstrSeriesDataPie[3] = [];
+XstrSeriesDataPie[3][0] = [];
+XstrSeriesDataPie[3][1] = [];
+XstrSeriesDataPie[4] = [];
+XstrSeriesDataPie[4][0] = [];
+XstrSeriesDataPie[4][1] = [];
+XstrSeriesDataPie[5] = [];
+XstrSeriesDataPie[5][0] = [];
+XstrSeriesDataPie[5][1] = [];
+XstrSeriesDataPie[6] = [];
+XstrSeriesDataPie[6][0] = [];
+XstrSeriesDataPie[6][1] = [];
+XstrSeriesDataPie[7] = [];
+XstrSeriesDataPie[7][0] = [];
+XstrSeriesDataPie[7][1] = [];
+XstrSeriesDataPie[8] = [];
+XstrSeriesDataPie[8][0] = [];
+XstrSeriesDataPie[8][1] = [];
+XstrSeriesDataPie[9] = [];
+XstrSeriesDataPie[9][0] = [];
+XstrSeriesDataPie[9][1] = [];
+XstrSeriesDataPie[10] = [];
+XstrSeriesDataPie[10][0] = [];
+XstrSeriesDataPie[10][1] = [];
+XstrSeriesDataPie[11] = [];
+XstrSeriesDataPie[11][0] = [];
+XstrSeriesDataPie[11][1] = [];
+XstrSeriesDataPie[12] = [];
+XstrSeriesDataPie[12][0] = [];
+XstrSeriesDataPie[12][1] = [];
+XstrSeriesDataPie[13] = [];
+XstrSeriesDataPie[13][0] = [];
+XstrSeriesDataPie[13][1] = [];
+XstrSeriesDataPie[14] = [];
+XstrSeriesDataPie[14][0] = [];
+XstrSeriesDataPie[14][1] = [];
+XstrSeriesDataPie[15] = [];
+XstrSeriesDataPie[15][0] = [];
+XstrSeriesDataPie[15][1] = [];
+XstrSeriesDataPie[16] = [];
+XstrSeriesDataPie[16][0] = [];
+XstrSeriesDataPie[16][1] = [];
+XstrSeriesDataPie[17] = [];
+XstrSeriesDataPie[17][0] = [];
+XstrSeriesDataPie[17][1] = [];
+language = 0;
+// Chart headings
+heading0 = "Population Density (QS102EW)";
+heading1 = "Age Profile (QS103EW)";
+heading2 = "Marital Status (KS103EW)";
+heading3 = "Ethnic Group (QS201EW)";
+heading4 = "Religion (KS209EW)";
+heading5 = "County of Birth (KS204EW)";
+heading6 = "Passports Held (KS205EW)";
+heading7 = "General Health (QS302EW)";
+heading8 = "Unpaid Care (QS301EW)";
+heading9 = "Accommodation Type (QS401EW)";
+heading10 = "Tenure (QS403EW)";
+heading11 = "Car or Van Availability (KS404EW)";
+heading12 = "Household Size (QS406EW)";
+heading13 = "Economic Activity (QS601EW)";
+heading14 = "Industry (KS605EW)";
+heading15 = "NS-SeC (QS607EW)";
+heading16 = "Occupation (KS608EW)";
+heading17 = "Method of Travel to Work (QS701EW)";
+XstrSeriesData[0][0][0] = '';
+XstrSeriesDataPie[0][0][0] = "[]";
+XstrSeriesData[0][0][1] = '';
+XstrSeriesDataPie[0][0][1] = "[]";
+XstrSeriesData[0][0][2] = '';
+XstrSeriesDataPie[0][0][2] = "[]";
+XstrSeriesData[1][0][0] = '6.24*5.59*7.04*11.87*27.38*25.44*8.65*3.17*2.39*2.24';
+XstrSeriesDataPie[1][0][0] = "[0 to 4#3496750*5 to 9#3135711*10 to 15#3946671*16 to 24#6658636*25 to 44#15351774*45 to 64#14263297*65 to 74#4852833*75 to 79#1777547*80 to 84#1338005*85 and over#1254688]";
+XstrSeriesData[1][0][1] = '5.87*5.56*7.27*10.2*25.05*27.58*9.63*3.53*2.71*2.6';
+XstrSeriesDataPie[1][0][1] = "[0 to 4#77307*5 to 9#73264*10 to 15#95834*16 to 24#134456*25 to 44#330148*45 to 64#363407*65 to 74#126964*75 to 79#46487*80 to 84#35685*85 and over#34236]";
+XstrSeriesData[1][0][2] = '5*5.2*7.22*9.94*23.7*28.54*10.59*4.02*3.04*2.76';
+XstrSeriesDataPie[1][0][2] = "[0 to 4#5578*5 to 9#5798*10 to 15#8052*16 to 24#11088*25 to 44#26449*45 to 64#31840*65 to 74#11821*75 to 79#4491*80 to 84#3387*85 and over#3077]";
+XstrSeriesData[2][0][0] = '';
+XstrSeriesDataPie[2][0][0] = "[]";
+XstrSeriesData[2][0][1] = '';
+XstrSeriesDataPie[2][0][1] = "[]";
+XstrSeriesData[2][0][2] = '';
+XstrSeriesDataPie[2][0][2] = "[]";
+XstrSeriesData[3][0][0] = '';
+XstrSeriesDataPie[3][0][0] = "[]";
+XstrSeriesData[3][0][1] = '';
+XstrSeriesDataPie[3][0][1] = "[]";
+XstrSeriesData[3][0][2] = '';
+XstrSeriesDataPie[3][0][2] = "[]";
+XstrSeriesData[4][0][0] = '';
+XstrSeriesDataPie[4][0][0] = "[]";
+XstrSeriesData[4][0][1] = '';
+XstrSeriesDataPie[4][0][1] = "[]";
+XstrSeriesData[4][0][2] = '';
+XstrSeriesDataPie[4][0][2] = "[]";
+XstrSeriesData[5][0][0] = '';
+XstrSeriesDataPie[5][0][0] = "[]";
+XstrSeriesData[5][0][1] = '';
+XstrSeriesDataPie[5][0][1] = "[]";
+XstrSeriesData[5][0][2] = '';
+XstrSeriesDataPie[5][0][2] = "[]";
+XstrSeriesData[6][0][0] = '';
+XstrSeriesDataPie[6][0][0] = "[]";
+XstrSeriesData[6][0][1] = '';
+XstrSeriesDataPie[6][0][1] = "[]";
+XstrSeriesData[6][0][2] = '';
+XstrSeriesDataPie[6][0][2] = "[]";
+XstrSeriesData[7][0][0] = '47.14*34.05*13.2*4.33*1.28';
+XstrSeriesDataPie[7][0][0] = "[#26434409*#19094820*#7401881*#2428668*#716134]";
+XstrSeriesData[7][0][1] = '49.1*34.98*11.9*3.14*0.88';
+XstrSeriesDataPie[7][0][1] = "[#646983*#460937*#156806*#41411*#11651]";
+XstrSeriesData[7][0][2] = '48.55*35.21*12.22*3.13*0.9';
+XstrSeriesDataPie[7][0][2] = "[#54170*#39284*#13638*#3489*#1000]";
+XstrSeriesData[8][0][0] = '89.66*6.54*1.38*2.43';
+XstrSeriesDataPie[8][0][0] = "[#50275666*#3665072*#775189*#1359985]";
+XstrSeriesData[8][0][1] = '89.91*7*1.08*2.01';
+XstrSeriesDataPie[8][0][1] = "[#1184850*#92224*#14286*#26428]";
+XstrSeriesData[8][0][2] = '89.35*7.51*1.07*2.06';
+XstrSeriesDataPie[8][0][2] = "[#99702*#8382*#1198*#2299]";
+XstrSeriesData[9][0][0] = '';
+XstrSeriesDataPie[9][0][0] = "[]";
+XstrSeriesData[9][0][1] = '';
+XstrSeriesDataPie[9][0][1] = "[]";
+XstrSeriesData[9][0][2] = '';
+XstrSeriesDataPie[9][0][2] = "[]";
+XstrSeriesData[10][0][0] = '';
+XstrSeriesDataPie[10][0][0] = "[]";
+XstrSeriesData[10][0][1] = '';
+XstrSeriesDataPie[10][0][1] = "[]";
+XstrSeriesData[10][0][2] = '';
+XstrSeriesDataPie[10][0][2] = "[]";
+XstrSeriesData[11][0][0] = '';
+XstrSeriesDataPie[11][0][0] = "[]";
+XstrSeriesData[11][0][1] = '';
+XstrSeriesDataPie[11][0][1] = "[]";
+XstrSeriesData[11][0][2] = '';
+XstrSeriesDataPie[11][0][2] = "[]";
+XstrSeriesData[12][0][0] = '30.25*34.23*15.58*12.97*4.64*1.66*0.4*0.27';
+XstrSeriesDataPie[12][0][0] = "[#7067261*#7998031*#3641569*#3031078*#1085188*#386784*#92734*#63399]";
+XstrSeriesData[12][0][1] = '26.71*37.49*15.6*14.08*4.43*1.28*0.28*0.13';
+XstrSeriesDataPie[12][0][1] = "[#145623*#204410*#85066*#76776*#24164*#6976*#1525*#714]";
+XstrSeriesData[12][0][2] = '25.36*39.33*16.02*13.97*3.95*1*0.28*0.09';
+XstrSeriesDataPie[12][0][2] = "[#11814*#18320*#7461*#6507*#1839*#465*#132*#41]";
+XstrSeriesData[13][0][0] = '';
+XstrSeriesDataPie[13][0][0] = "[]";
+XstrSeriesData[13][0][1] = '';
+XstrSeriesDataPie[13][0][1] = "[]";
+XstrSeriesData[13][0][2] = '';
+XstrSeriesDataPie[13][0][2] = "[]";
+XstrSeriesData[14][0][0] = '';
+XstrSeriesDataPie[14][0][0] = "[]";
+XstrSeriesData[14][0][1] = '';
+XstrSeriesDataPie[14][0][1] = "[]";
+XstrSeriesData[14][0][2] = '';
+XstrSeriesDataPie[14][0][2] = "[]";
+XstrSeriesData[15][0][0] = '10.26*20.84*12.74*9.42*6.95*14.08*11.1*5.6';
+XstrSeriesDataPie[15][0][0] = "[#4220766*#8571458*#5240440*#3872779*#2857185*#5789519*#4564916*#2301614]";
+XstrSeriesData[15][0][1] = '13.2*24.1*14.04*9.87*7.14*13.29*9.04*2.92';
+XstrSeriesDataPie[15][0][1] = "[#126044*#230186*#134082*#94250*#68232*#126955*#86300*#27874]";
+XstrSeriesData[15][0][2] = '13.19*25.74*15.13*9.15*7.07*12.85*8.06*2.37';
+XstrSeriesDataPie[15][0][2] = "[#10707*#20900*#12287*#7431*#5737*#10432*#6545*#1925]";
+XstrSeriesData[16][0][0] = '';
+XstrSeriesDataPie[16][0][0] = "[]";
+XstrSeriesData[16][0][1] = '';
+XstrSeriesDataPie[16][0][1] = "[]";
+XstrSeriesData[16][0][2] = '';
+XstrSeriesDataPie[16][0][2] = "[]";
+XstrSeriesData[17][0][0] = '3.46*2.5*3.33*4.74*0.34*0.52*37.12*3.3*1.85*6.92*0.42*35.5';
+XstrSeriesDataPie[17][0][0] = "[#1422708*#1028800*#1371025*#1949442*#137988*#214244*#15264527*#1357280*#762334*#2846588*#171400*#14600204]";
+XstrSeriesData[17][0][1] = '4.41*0.09*3.02*2.05*0.21*0.68*46.76*3.33*2.22*6.4*0.53*30.32';
+XstrSeriesDataPie[17][0][1] = "[#42110*#868*#28866*#19546*#1968*#6459*#446587*#31767*#21177*#61080*#5038*#289509]";
+XstrSeriesData[17][0][2] = '3.7*0.06*2.6*1.33*0.19*0.91*49.31*3.24*2.58*4.94*0.65*30.48';
+XstrSeriesDataPie[17][0][2] = "[#3003*#46*#2113*#1083*#153*#739*#40036*#2632*#2095*#4014*#531*#24753]";
+XstrSeriesData[1][1][0] = "[6.24*5.59*7.04*11.87*27.38*25.44*8.65*3.17*2.39*2.24]";
+XstrSeriesDataPie[1][1][0] = "[0 to 4#3496750*5 to 9#3135711*10 to 15#3946671*16 to 24#6658636*25 to 44#15351774*45 to 64#14263297*65 to 74#4852833*75 to 79#1777547*80 to 84#1338005*85 and over#1254688]";
+XstrSeriesData[1][1][1] = "[5.87*5.56*7.27*10.2*25.05*27.58*9.63*3.53*2.71*2.6]";
+XstrSeriesDataPie[1][1][1] = "[0 to 4#77307*5 to 9#73264*10 to 15#95834*16 to 24#134456*25 to 44#330148*45 to 64#363407*65 to 74#126964*75 to 79#46487*80 to 84#35685*85 and over#34236]";
+XstrSeriesData[1][1][2] = "[5*5.2*7.22*9.94*23.7*28.54*10.59*4.02*3.04*2.76]";
+XstrSeriesDataPie[1][1][2] = "[0 to 4#5578*5 to 9#5798*10 to 15#8052*16 to 24#11088*25 to 44#26449*45 to 64#31840*65 to 74#11821*75 to 79#4491*80 to 84#3387*85 and over#3077]";
+XstrSeriesData[1][1][3] = "[]";
+XstrSeriesDataPie[1][1][3] = "[]";
+XstrSeriesData[1][1][4] = "[]";
+XstrSeriesDataPie[1][1][4] = "[]";
+XstrSeriesData[1][1][5] = "[]";
+XstrSeriesDataPie[1][1][5] = "[]";
+XstrSeriesData[1][1][6] = "[]";
+XstrSeriesDataPie[1][1][6] = "[]";
+XstrSeriesData[1][1][7] = "[]";
+XstrSeriesDataPie[1][1][7] = "[]";
+XstrSeriesData[1][1][8] = "[]";
+XstrSeriesDataPie[1][1][8] = "[]";
+XstrSeriesData[1][1][9] = "[]";
+XstrSeriesDataPie[1][1][9] = "[]";
+XstrSeriesData[1][1][10] = "[]";
+XstrSeriesDataPie[1][1][10] = "[]";
+XstrSeriesData[1][1][11] = "[]";
+XstrSeriesDataPie[1][1][11] = "[]";
+XstrSeriesData[1][1][12] = "[]";
+XstrSeriesDataPie[1][1][12] = "[]";
+XstrSeriesData[1][1][13] = "[]";
+XstrSeriesDataPie[1][1][13] = "[]";
+XstrSeriesData[1][1][14] = "[]";
+XstrSeriesDataPie[1][1][14] = "[]";
+XstrSeriesData[7][1][0] = "[47.14*34.05*13.2*4.33*1.28]";
+XstrSeriesDataPie[7][1][0] = "[#26434409*#19094820*#7401881*#2428668*#716134]";
+XstrSeriesData[7][1][1] = "[49.1*34.98*11.9*3.14*0.88]";
+XstrSeriesDataPie[7][1][1] = "[#646983*#460937*#156806*#41411*#11651]";
+XstrSeriesData[7][1][2] = "[48.55*35.21*12.22*3.13*0.9]";
+XstrSeriesDataPie[7][1][2] = "[#54170*#39284*#13638*#3489*#1000]";
+XstrSeriesData[7][1][3] = "[]";
+XstrSeriesDataPie[7][1][3] = "[]";
+XstrSeriesData[7][1][4] = "[]";
+XstrSeriesDataPie[7][1][4] = "[]";
+XstrSeriesData[7][1][5] = "[]";
+XstrSeriesDataPie[7][1][5] = "[]";
+XstrSeriesData[7][1][6] = "[]";
+XstrSeriesDataPie[7][1][6] = "[]";
+XstrSeriesData[7][1][7] = "[]";
+XstrSeriesDataPie[7][1][7] = "[]";
+XstrSeriesData[7][1][8] = "[]";
+XstrSeriesDataPie[7][1][8] = "[]";
+XstrSeriesData[7][1][9] = "[]";
+XstrSeriesDataPie[7][1][9] = "[]";
+XstrSeriesData[7][1][10] = "[]";
+XstrSeriesDataPie[7][1][10] = "[]";
+XstrSeriesData[7][1][11] = "[]";
+XstrSeriesDataPie[7][1][11] = "[]";
+XstrSeriesData[7][1][12] = "[]";
+XstrSeriesDataPie[7][1][12] = "[]";
+XstrSeriesData[7][1][13] = "[]";
+XstrSeriesDataPie[7][1][13] = "[]";
+XstrSeriesData[7][1][14] = "[]";
+XstrSeriesDataPie[7][1][14] = "[]";
+XstrSeriesData[8][1][0] = "[89.66*6.54*1.38*2.43]";
+XstrSeriesDataPie[8][1][0] = "[#50275666*#3665072*#775189*#1359985]";
+XstrSeriesData[8][1][1] = "[89.91*7*1.08*2.01]";
+XstrSeriesDataPie[8][1][1] = "[#1184850*#92224*#14286*#26428]";
+XstrSeriesData[8][1][2] = "[89.35*7.51*1.07*2.06]";
+XstrSeriesDataPie[8][1][2] = "[#99702*#8382*#1198*#2299]";
+XstrSeriesData[8][1][3] = "[]";
+XstrSeriesDataPie[8][1][3] = "[]";
+XstrSeriesData[8][1][4] = "[]";
+XstrSeriesDataPie[8][1][4] = "[]";
+XstrSeriesData[8][1][5] = "[]";
+XstrSeriesDataPie[8][1][5] = "[]";
+XstrSeriesData[8][1][6] = "[]";
+XstrSeriesDataPie[8][1][6] = "[]";
+XstrSeriesData[8][1][7] = "[]";
+XstrSeriesDataPie[8][1][7] = "[]";
+XstrSeriesData[8][1][8] = "[]";
+XstrSeriesDataPie[8][1][8] = "[]";
+XstrSeriesData[8][1][9] = "[]";
+XstrSeriesDataPie[8][1][9] = "[]";
+XstrSeriesData[8][1][10] = "[]";
+XstrSeriesDataPie[8][1][10] = "[]";
+XstrSeriesData[8][1][11] = "[]";
+XstrSeriesDataPie[8][1][11] = "[]";
+XstrSeriesData[8][1][12] = "[]";
+XstrSeriesDataPie[8][1][12] = "[]";
+XstrSeriesData[8][1][13] = "[]";
+XstrSeriesDataPie[8][1][13] = "[]";
+XstrSeriesData[8][1][14] = "[]";
+XstrSeriesDataPie[8][1][14] = "[]";
+XstrSeriesData[12][1][0] = "[30.25*34.23*15.58*12.97*4.64*1.66*0.4*0.27]";
+XstrSeriesDataPie[12][1][0] = "[#7067261*#7998031*#3641569*#3031078*#1085188*#386784*#92734*#63399]";
+XstrSeriesData[12][1][1] = "[26.71*37.49*15.6*14.08*4.43*1.28*0.28*0.13]";
+XstrSeriesDataPie[12][1][1] = "[#145623*#204410*#85066*#76776*#24164*#6976*#1525*#714]";
+XstrSeriesData[12][1][2] = "[25.36*39.33*16.02*13.97*3.95*1*0.28*0.09]";
+XstrSeriesDataPie[12][1][2] = "[#11814*#18320*#7461*#6507*#1839*#465*#132*#41]";
+XstrSeriesData[12][1][3] = "[]";
+XstrSeriesDataPie[12][1][3] = "[]";
+XstrSeriesData[12][1][4] = "[]";
+XstrSeriesDataPie[12][1][4] = "[]";
+XstrSeriesData[12][1][5] = "[]";
+XstrSeriesDataPie[12][1][5] = "[]";
+XstrSeriesData[12][1][6] = "[]";
+XstrSeriesDataPie[12][1][6] = "[]";
+XstrSeriesData[12][1][7] = "[]";
+XstrSeriesDataPie[12][1][7] = "[]";
+XstrSeriesData[12][1][8] = "[]";
+XstrSeriesDataPie[12][1][8] = "[]";
+XstrSeriesData[12][1][9] = "[]";
+XstrSeriesDataPie[12][1][9] = "[]";
+XstrSeriesData[12][1][10] = "[]";
+XstrSeriesDataPie[12][1][10] = "[]";
+XstrSeriesData[12][1][11] = "[]";
+XstrSeriesDataPie[12][1][11] = "[]";
+XstrSeriesData[12][1][12] = "[]";
+XstrSeriesDataPie[12][1][12] = "[]";
+XstrSeriesData[12][1][13] = "[]";
+XstrSeriesDataPie[12][1][13] = "[]";
+XstrSeriesData[12][1][14] = "[]";
+XstrSeriesDataPie[12][1][14] = "[]";
+XstrSeriesData[15][1][0] = "[10.26*20.84*12.74*9.42*6.95*14.08*11.1*5.6]";
+XstrSeriesDataPie[15][1][0] = "[#4220766*#8571458*#5240440*#3872779*#2857185*#5789519*#4564916*#2301614]";
+XstrSeriesData[15][1][1] = "[13.2*24.1*14.04*9.87*7.14*13.29*9.04*2.92]";
+XstrSeriesDataPie[15][1][1] = "[#126044*#230186*#134082*#94250*#68232*#126955*#86300*#27874]";
+XstrSeriesData[15][1][2] = "[13.19*25.74*15.13*9.15*7.07*12.85*8.06*2.37]";
+XstrSeriesDataPie[15][1][2] = "[#10707*#20900*#12287*#7431*#5737*#10432*#6545*#1925]";
+XstrSeriesData[15][1][3] = "[]";
+XstrSeriesDataPie[15][1][3] = "[]";
+XstrSeriesData[15][1][4] = "[]";
+XstrSeriesDataPie[15][1][4] = "[]";
+XstrSeriesData[15][1][5] = "[]";
+XstrSeriesDataPie[15][1][5] = "[]";
+XstrSeriesData[15][1][6] = "[]";
+XstrSeriesDataPie[15][1][6] = "[]";
+XstrSeriesData[15][1][7] = "[]";
+XstrSeriesDataPie[15][1][7] = "[]";
+XstrSeriesData[15][1][8] = "[]";
+XstrSeriesDataPie[15][1][8] = "[]";
+XstrSeriesData[15][1][9] = "[]";
+XstrSeriesDataPie[15][1][9] = "[]";
+XstrSeriesData[15][1][10] = "[]";
+XstrSeriesDataPie[15][1][10] = "[]";
+XstrSeriesData[15][1][11] = "[]";
+XstrSeriesDataPie[15][1][11] = "[]";
+XstrSeriesData[15][1][12] = "[]";
+XstrSeriesDataPie[15][1][12] = "[]";
+XstrSeriesData[15][1][13] = "[]";
+XstrSeriesDataPie[15][1][13] = "[]";
+XstrSeriesData[15][1][14] = "[]";
+XstrSeriesDataPie[15][1][14] = "[]";
+XstrSeriesData[17][1][0] = "[3.46*2.5*3.33*4.74*0.34*0.52*37.12*3.3*1.85*6.92*0.42*35.5]";
+XstrSeriesDataPie[17][1][0] = "[#1422708*#1028800*#1371025*#1949442*#137988*#214244*#15264527*#1357280*#762334*#2846588*#171400*#14600204]";
+XstrSeriesData[17][1][1] = "[4.41*0.09*3.02*2.05*0.21*0.68*46.76*3.33*2.22*6.4*0.53*30.32]";
+XstrSeriesDataPie[17][1][1] = "[#42110*#868*#28866*#19546*#1968*#6459*#446587*#31767*#21177*#61080*#5038*#289509]";
+XstrSeriesData[17][1][2] = "[3.7*0.06*2.6*1.33*0.19*0.91*49.31*3.24*2.58*4.94*0.65*30.48]";
+XstrSeriesDataPie[17][1][2] = "[#3003*#46*#2113*#1083*#153*#739*#40036*#2632*#2095*#4014*#531*#24753]";
+XstrSeriesData[17][1][3] = "[]";
+XstrSeriesDataPie[17][1][3] = "[]";
+XstrSeriesData[17][1][4] = "[]";
+XstrSeriesDataPie[17][1][4] = "[]";
+XstrSeriesData[17][1][5] = "[]";
+XstrSeriesDataPie[17][1][5] = "[]";
+XstrSeriesData[17][1][6] = "[]";
+XstrSeriesDataPie[17][1][6] = "[]";
+XstrSeriesData[17][1][7] = "[]";
+XstrSeriesDataPie[17][1][7] = "[]";
+XstrSeriesData[17][1][8] = "[]";
+XstrSeriesDataPie[17][1][8] = "[]";
+XstrSeriesData[17][1][9] = "[]";
+XstrSeriesDataPie[17][1][9] = "[]";
+XstrSeriesData[17][1][10] = "[]";
+XstrSeriesDataPie[17][1][10] = "[]";
+XstrSeriesData[17][1][11] = "[]";
+XstrSeriesDataPie[17][1][11] = "[]";
+XstrSeriesData[17][1][12] = "[]";
+XstrSeriesDataPie[17][1][12] = "[]";
+XstrSeriesData[17][1][13] = "[]";
+XstrSeriesDataPie[17][1][13] = "[]";
+XstrSeriesData[17][1][14] = "[]";
+XstrSeriesDataPie[17][1][14] = "[]";
+// Area details used by mapping 
+var strAreaCode = "E07000087";
+var strAreaType = "NMD";
+var strParentAreaCode = "E10000014";
+var strParentAreaType = "CTY";
+var strSelectedAreaName = "Fareham";
+/* ]]> */
+</script>
+</head>
+<body>
+<h2 class='title' id='maintitle'>Fareham Area Profile</h2>
+<h3 class='profileTitle'>&nbsp;Map</h3>
+<div id="map"></div>
+<h3 class='profileTitle'>&nbsp;Demography</h3><div class="tables" id="tableProfile1_0_0_VIS"><h4 class='tableHeading'>Age Profile (QS103EW)</h4><table id='profileTable1_0_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Age</th><th title='click on column heading to sort table by this column'>0 to 4</th><th title='click on column heading to sort table by this column'>5 to 9</th><th title='click on column heading to sort table by this column'>10 to 15</th><th title='click on column heading to sort table by this column'>16 to 24</th><th title='click on column heading to sort table by this column'>25 to 44</th><th title='click on column heading to sort table by this column'>45 to 64</th><th title='click on column heading to sort table by this column'>65 to 74</th><th title='click on column heading to sort table by this column'>75 to 79</th><th title='click on column heading to sort table by this column'>80 to 84</th><th title='click on column heading to sort table by this column'>85 and over</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>56,075,912</td><td class='number'>3,496,750</td><td class='number'>3,135,711</td><td class='number'>3,946,671</td><td class='number'>6,658,636</td><td class='number'>15,351,774</td><td class='number'>14,263,297</td><td class='number'>4,852,833</td><td class='number'>1,777,547</td><td class='number'>1,338,005</td><td class='number'>1,254,688</td></tr><tr><td>Hampshire</td><td class='number'>1,317,788</td><td class='number'>77,307</td><td class='number'>73,264</td><td class='number'>95,834</td><td class='number'>134,456</td><td class='number'>330,148</td><td class='number'>363,407</td><td class='number'>126,964</td><td class='number'>46,487</td><td class='number'>35,685</td><td class='number'>34,236</td></tr><tr><td>Fareham</td><td class='number'>111,581</td><td class='number'>5,578</td><td class='number'>5,798</td><td class='number'>8,052</td><td class='number'>11,088</td><td class='number'>26,449</td><td class='number'>31,840</td><td class='number'>11,821</td><td class='number'>4,491</td><td class='number'>3,387</td><td class='number'>3,077</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(1,0);'/></p></div>
+<div class="tables" id="tableProfile1_0_1_HID"><h4 class='tableHeading'>Age Profile (QS103EW)</h4><table id='profileTable1_0_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>0 to 4</th><th title='click on column heading to sort table by this column'>5 to 9</th><th title='click on column heading to sort table by this column'>10 to 15</th><th title='click on column heading to sort table by this column'>16 to 24</th><th title='click on column heading to sort table by this column'>25 to 44</th><th title='click on column heading to sort table by this column'>45 to 64</th><th title='click on column heading to sort table by this column'>65 to 74</th><th title='click on column heading to sort table by this column'>75 to 79</th><th title='click on column heading to sort table by this column'>80 to 84</th><th title='click on column heading to sort table by this column'>85 and over</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>6.24</td><td class='number'>5.59</td><td class='number'>7.04</td><td class='number'>11.87</td><td class='number'>27.38</td><td class='number'>25.44</td><td class='number'>8.65</td><td class='number'>3.17</td><td class='number'>2.39</td><td class='number'>2.24</td></tr><tr><td>Hampshire</td><td class='number'>5.87</td><td class='number'>5.56</td><td class='number'>7.27</td><td class='number'>10.2</td><td class='number'>25.05</td><td class='number'>27.58</td><td class='number'>9.63</td><td class='number'>3.53</td><td class='number'>2.71</td><td class='number'>2.6</td></tr><tr><td>Fareham</td><td class='number'>5</td><td class='number'>5.2</td><td class='number'>7.22</td><td class='number'>9.94</td><td class='number'>23.7</td><td class='number'>28.54</td><td class='number'>10.59</td><td class='number'>4.02</td><td class='number'>3.04</td><td class='number'>2.76</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(1,0);'/></p></div>
+<div class="tables" id="tableProfile1_1_0_VIS"><h4 class='tableHeading'>Age Profile (QS103EW)</h4><table id='profileTable1_1_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Age</th><th title='click on column heading to sort table by this column'>0 to 4</th><th title='click on column heading to sort table by this column'>5 to 9</th><th title='click on column heading to sort table by this column'>10 to 15</th><th title='click on column heading to sort table by this column'>16 to 24</th><th title='click on column heading to sort table by this column'>25 to 44</th><th title='click on column heading to sort table by this column'>45 to 64</th><th title='click on column heading to sort table by this column'>65 to 74</th><th title='click on column heading to sort table by this column'>75 to 79</th><th title='click on column heading to sort table by this column'>80 to 84</th><th title='click on column heading to sort table by this column'>85 and over</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>7,462</td><td class='number'>397</td><td class='number'>405</td><td class='number'>536</td><td class='number'>764</td><td class='number'>1,907</td><td class='number'>2,088</td><td class='number'>667</td><td class='number'>271</td><td class='number'>210</td><td class='number'>217</td></tr><tr><td>Fareham North</td><td class='number'>7,287</td><td class='number'>367</td><td class='number'>372</td><td class='number'>483</td><td class='number'>682</td><td class='number'>1,685</td><td class='number'>1,961</td><td class='number'>828</td><td class='number'>385</td><td class='number'>274</td><td class='number'>250</td></tr><tr><td>Fareham North-West</td><td class='number'>7,401</td><td class='number'>398</td><td class='number'>392</td><td class='number'>615</td><td class='number'>877</td><td class='number'>1,941</td><td class='number'>1,885</td><td class='number'>699</td><td class='number'>238</td><td class='number'>214</td><td class='number'>142</td></tr><tr><td>Fareham South</td><td class='number'>7,231</td><td class='number'>474</td><td class='number'>384</td><td class='number'>553</td><td class='number'>875</td><td class='number'>1,985</td><td class='number'>1,819</td><td class='number'>653</td><td class='number'>210</td><td class='number'>155</td><td class='number'>123</td></tr><tr><td>Fareham West</td><td class='number'>6,438</td><td class='number'>249</td><td class='number'>242</td><td class='number'>308</td><td class='number'>561</td><td class='number'>1,367</td><td class='number'>1,899</td><td class='number'>961</td><td class='number'>355</td><td class='number'>270</td><td class='number'>226</td></tr><tr><td>Hill Head</td><td class='number'>7,170</td><td class='number'>312</td><td class='number'>316</td><td class='number'>465</td><td class='number'>613</td><td class='number'>1,351</td><td class='number'>2,189</td><td class='number'>959</td><td class='number'>411</td><td class='number'>292</td><td class='number'>262</td></tr><tr><td>Locks Heath</td><td class='number'>7,104</td><td class='number'>291</td><td class='number'>365</td><td class='number'>603</td><td class='number'>749</td><td class='number'>1,432</td><td class='number'>2,222</td><td class='number'>745</td><td class='number'>284</td><td class='number'>230</td><td class='number'>183</td></tr><tr><td>Park Gate</td><td class='number'>7,811</td><td class='number'>473</td><td class='number'>455</td><td class='number'>616</td><td class='number'>773</td><td class='number'>2,235</td><td class='number'>2,047</td><td class='number'>606</td><td class='number'>232</td><td class='number'>186</td><td class='number'>188</td></tr><tr><td>Portchester East</td><td class='number'>10,882</td><td class='number'>468</td><td class='number'>469</td><td class='number'>686</td><td class='number'>1,049</td><td class='number'>2,278</td><td class='number'>3,258</td><td class='number'>1,345</td><td class='number'>526</td><td class='number'>430</td><td class='number'>373</td></tr><tr><td>Portchester West</td><td class='number'>6,907</td><td class='number'>263</td><td class='number'>330</td><td class='number'>443</td><td class='number'>682</td><td class='number'>1,609</td><td class='number'>2,083</td><td class='number'>796</td><td class='number'>300</td><td class='number'>189</td><td class='number'>212</td></tr><tr><td>Sarisbury</td><td class='number'>7,385</td><td class='number'>519</td><td class='number'>543</td><td class='number'>630</td><td class='number'>599</td><td class='number'>2,205</td><td class='number'>1,998</td><td class='number'>526</td><td class='number'>182</td><td class='number'>98</td><td class='number'>85</td></tr><tr><td>Stubbington</td><td class='number'>6,907</td><td class='number'>228</td><td class='number'>317</td><td class='number'>493</td><td class='number'>631</td><td class='number'>1,178</td><td class='number'>2,093</td><td class='number'>940</td><td class='number'>375</td><td class='number'>322</td><td class='number'>330</td></tr><tr><td>Titchfield</td><td class='number'>7,280</td><td class='number'>430</td><td class='number'>392</td><td class='number'>549</td><td class='number'>674</td><td class='number'>1,792</td><td class='number'>2,094</td><td class='number'>745</td><td class='number'>257</td><td class='number'>185</td><td class='number'>162</td></tr><tr><td>Titchfield Common</td><td class='number'>7,133</td><td class='number'>402</td><td class='number'>402</td><td class='number'>508</td><td class='number'>747</td><td class='number'>1,899</td><td class='number'>2,073</td><td class='number'>603</td><td class='number'>194</td><td class='number'>151</td><td class='number'>154</td></tr><tr><td>Warsash</td><td class='number'>7,183</td><td class='number'>307</td><td class='number'>414</td><td class='number'>564</td><td class='number'>812</td><td class='number'>1,585</td><td class='number'>2,131</td><td class='number'>748</td><td class='number'>271</td><td class='number'>181</td><td class='number'>170</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(1,1);'/></p></div>
+<div class="tables" id="tableProfile1_1_1_HID"><h4 class='tableHeading'>Age Profile (QS103EW)</h4><table id='profileTable1_1_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>0 to 4</th><th title='click on column heading to sort table by this column'>5 to 9</th><th title='click on column heading to sort table by this column'>10 to 15</th><th title='click on column heading to sort table by this column'>16 to 24</th><th title='click on column heading to sort table by this column'>25 to 44</th><th title='click on column heading to sort table by this column'>45 to 64</th><th title='click on column heading to sort table by this column'>65 to 74</th><th title='click on column heading to sort table by this column'>75 to 79</th><th title='click on column heading to sort table by this column'>80 to 84</th><th title='click on column heading to sort table by this column'>85 and over</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>5.32</td><td class='number'>5.43</td><td class='number'>7.18</td><td class='number'>10.24</td><td class='number'>25.56</td><td class='number'>27.98</td><td class='number'>8.94</td><td class='number'>3.63</td><td class='number'>2.81</td><td class='number'>2.91</td></tr><tr><td>Fareham North</td><td class='number'>5.04</td><td class='number'>5.1</td><td class='number'>6.63</td><td class='number'>9.36</td><td class='number'>23.12</td><td class='number'>26.91</td><td class='number'>11.36</td><td class='number'>5.28</td><td class='number'>3.76</td><td class='number'>3.43</td></tr><tr><td>Fareham North-West</td><td class='number'>5.38</td><td class='number'>5.3</td><td class='number'>8.31</td><td class='number'>11.85</td><td class='number'>26.23</td><td class='number'>25.47</td><td class='number'>9.44</td><td class='number'>3.22</td><td class='number'>2.89</td><td class='number'>1.92</td></tr><tr><td>Fareham South</td><td class='number'>6.56</td><td class='number'>5.31</td><td class='number'>7.65</td><td class='number'>12.1</td><td class='number'>27.45</td><td class='number'>25.16</td><td class='number'>9.03</td><td class='number'>2.9</td><td class='number'>2.14</td><td class='number'>1.7</td></tr><tr><td>Fareham West</td><td class='number'>3.87</td><td class='number'>3.76</td><td class='number'>4.78</td><td class='number'>8.71</td><td class='number'>21.23</td><td class='number'>29.5</td><td class='number'>14.93</td><td class='number'>5.51</td><td class='number'>4.19</td><td class='number'>3.51</td></tr><tr><td>Hill Head</td><td class='number'>4.35</td><td class='number'>4.41</td><td class='number'>6.49</td><td class='number'>8.55</td><td class='number'>18.84</td><td class='number'>30.53</td><td class='number'>13.38</td><td class='number'>5.73</td><td class='number'>4.07</td><td class='number'>3.65</td></tr><tr><td>Locks Heath</td><td class='number'>4.1</td><td class='number'>5.14</td><td class='number'>8.49</td><td class='number'>10.54</td><td class='number'>20.16</td><td class='number'>31.28</td><td class='number'>10.49</td><td class='number'>4</td><td class='number'>3.24</td><td class='number'>2.58</td></tr><tr><td>Park Gate</td><td class='number'>6.06</td><td class='number'>5.83</td><td class='number'>7.89</td><td class='number'>9.9</td><td class='number'>28.61</td><td class='number'>26.21</td><td class='number'>7.76</td><td class='number'>2.97</td><td class='number'>2.38</td><td class='number'>2.41</td></tr><tr><td>Portchester East</td><td class='number'>4.3</td><td class='number'>4.31</td><td class='number'>6.3</td><td class='number'>9.64</td><td class='number'>20.93</td><td class='number'>29.94</td><td class='number'>12.36</td><td class='number'>4.83</td><td class='number'>3.95</td><td class='number'>3.43</td></tr><tr><td>Portchester West</td><td class='number'>3.81</td><td class='number'>4.78</td><td class='number'>6.41</td><td class='number'>9.87</td><td class='number'>23.3</td><td class='number'>30.16</td><td class='number'>11.52</td><td class='number'>4.34</td><td class='number'>2.74</td><td class='number'>3.07</td></tr><tr><td>Sarisbury</td><td class='number'>7.03</td><td class='number'>7.35</td><td class='number'>8.53</td><td class='number'>8.11</td><td class='number'>29.86</td><td class='number'>27.05</td><td class='number'>7.12</td><td class='number'>2.46</td><td class='number'>1.33</td><td class='number'>1.15</td></tr><tr><td>Stubbington</td><td class='number'>3.3</td><td class='number'>4.59</td><td class='number'>7.14</td><td class='number'>9.14</td><td class='number'>17.06</td><td class='number'>30.3</td><td class='number'>13.61</td><td class='number'>5.43</td><td class='number'>4.66</td><td class='number'>4.78</td></tr><tr><td>Titchfield</td><td class='number'>5.91</td><td class='number'>5.38</td><td class='number'>7.54</td><td class='number'>9.26</td><td class='number'>24.62</td><td class='number'>28.76</td><td class='number'>10.23</td><td class='number'>3.53</td><td class='number'>2.54</td><td class='number'>2.23</td></tr><tr><td>Titchfield Common</td><td class='number'>5.64</td><td class='number'>5.64</td><td class='number'>7.12</td><td class='number'>10.47</td><td class='number'>26.62</td><td class='number'>29.06</td><td class='number'>8.45</td><td class='number'>2.72</td><td class='number'>2.12</td><td class='number'>2.16</td></tr><tr><td>Warsash</td><td class='number'>4.27</td><td class='number'>5.76</td><td class='number'>7.85</td><td class='number'>11.3</td><td class='number'>22.07</td><td class='number'>29.67</td><td class='number'>10.41</td><td class='number'>3.77</td><td class='number'>2.52</td><td class='number'>2.37</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(1,1);'/></p></div>
+<div class="charts" id="chartProfile1_0"></div>
+<script type="text/javascript">
+displayBarChart(1, 0, heading1);
+</script>
+<h3 class='profileTitle'>&nbsp;Health</h3><div class="tables" id="tableProfile7_0_0_VIS"><h4 class='tableHeading'>General Health (QS302EW)</h4><table id='profileTable7_0_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: General health</th><th title='click on column heading to sort table by this column'>Very good health</th><th title='click on column heading to sort table by this column'>Good health</th><th title='click on column heading to sort table by this column'>Fair health</th><th title='click on column heading to sort table by this column'>Bad health</th><th title='click on column heading to sort table by this column'>Very bad health</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>56,075,912</td><td class='number'>26,434,409</td><td class='number'>19,094,820</td><td class='number'>7,401,881</td><td class='number'>2,428,668</td><td class='number'>716,134</td></tr><tr><td>Hampshire</td><td class='number'>1,317,788</td><td class='number'>646,983</td><td class='number'>460,937</td><td class='number'>156,806</td><td class='number'>41,411</td><td class='number'>11,651</td></tr><tr><td>Fareham</td><td class='number'>111,581</td><td class='number'>54,170</td><td class='number'>39,284</td><td class='number'>13,638</td><td class='number'>3,489</td><td class='number'>1,000</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(7,0);'/></p></div>
+<div class="tables" id="tableProfile7_0_1_HID"><h4 class='tableHeading'>General Health (QS302EW)</h4><table id='profileTable7_0_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>Very good health</th><th title='click on column heading to sort table by this column'>Good health</th><th title='click on column heading to sort table by this column'>Fair health</th><th title='click on column heading to sort table by this column'>Bad health</th><th title='click on column heading to sort table by this column'>Very bad health</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>47.14</td><td class='number'>34.05</td><td class='number'>13.2</td><td class='number'>4.33</td><td class='number'>1.28</td></tr><tr><td>Hampshire</td><td class='number'>49.1</td><td class='number'>34.98</td><td class='number'>11.9</td><td class='number'>3.14</td><td class='number'>0.88</td></tr><tr><td>Fareham</td><td class='number'>48.55</td><td class='number'>35.21</td><td class='number'>12.22</td><td class='number'>3.13</td><td class='number'>0.9</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(7,0);'/></p></div>
+<div class="tables" id="tableProfile7_1_0_VIS"><h4 class='tableHeading'>General Health (QS302EW)</h4><table id='profileTable7_1_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: General health</th><th title='click on column heading to sort table by this column'>Very good health</th><th title='click on column heading to sort table by this column'>Good health</th><th title='click on column heading to sort table by this column'>Fair health</th><th title='click on column heading to sort table by this column'>Bad health</th><th title='click on column heading to sort table by this column'>Very bad health</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>7,462</td><td class='number'>3,672</td><td class='number'>2,606</td><td class='number'>872</td><td class='number'>237</td><td class='number'>75</td></tr><tr><td>Fareham North</td><td class='number'>7,287</td><td class='number'>3,357</td><td class='number'>2,618</td><td class='number'>998</td><td class='number'>243</td><td class='number'>71</td></tr><tr><td>Fareham North-West</td><td class='number'>7,401</td><td class='number'>3,351</td><td class='number'>2,708</td><td class='number'>1,008</td><td class='number'>278</td><td class='number'>56</td></tr><tr><td>Fareham South</td><td class='number'>7,231</td><td class='number'>3,236</td><td class='number'>2,640</td><td class='number'>974</td><td class='number'>285</td><td class='number'>96</td></tr><tr><td>Fareham West</td><td class='number'>6,438</td><td class='number'>2,784</td><td class='number'>2,391</td><td class='number'>979</td><td class='number'>228</td><td class='number'>56</td></tr><tr><td>Hill Head</td><td class='number'>7,170</td><td class='number'>3,386</td><td class='number'>2,564</td><td class='number'>944</td><td class='number'>220</td><td class='number'>56</td></tr><tr><td>Locks Heath</td><td class='number'>7,104</td><td class='number'>3,804</td><td class='number'>2,308</td><td class='number'>782</td><td class='number'>157</td><td class='number'>53</td></tr><tr><td>Park Gate</td><td class='number'>7,811</td><td class='number'>4,061</td><td class='number'>2,606</td><td class='number'>813</td><td class='number'>273</td><td class='number'>58</td></tr><tr><td>Portchester East</td><td class='number'>10,882</td><td class='number'>4,541</td><td class='number'>4,116</td><td class='number'>1,666</td><td class='number'>435</td><td class='number'>124</td></tr><tr><td>Portchester West</td><td class='number'>6,907</td><td class='number'>3,268</td><td class='number'>2,523</td><td class='number'>846</td><td class='number'>213</td><td class='number'>57</td></tr><tr><td>Sarisbury</td><td class='number'>7,385</td><td class='number'>4,419</td><td class='number'>2,277</td><td class='number'>556</td><td class='number'>100</td><td class='number'>33</td></tr><tr><td>Stubbington</td><td class='number'>6,907</td><td class='number'>3,027</td><td class='number'>2,466</td><td class='number'>1,052</td><td class='number'>288</td><td class='number'>74</td></tr><tr><td>Titchfield</td><td class='number'>7,280</td><td class='number'>3,738</td><td class='number'>2,523</td><td class='number'>759</td><td class='number'>177</td><td class='number'>83</td></tr><tr><td>Titchfield Common</td><td class='number'>7,133</td><td class='number'>3,602</td><td class='number'>2,547</td><td class='number'>762</td><td class='number'>179</td><td class='number'>43</td></tr><tr><td>Warsash</td><td class='number'>7,183</td><td class='number'>3,924</td><td class='number'>2,391</td><td class='number'>627</td><td class='number'>176</td><td class='number'>65</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(7,1);'/></p></div>
+<div class="tables" id="tableProfile7_1_1_HID"><h4 class='tableHeading'>General Health (QS302EW)</h4><table id='profileTable7_1_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>Very good health</th><th title='click on column heading to sort table by this column'>Good health</th><th title='click on column heading to sort table by this column'>Fair health</th><th title='click on column heading to sort table by this column'>Bad health</th><th title='click on column heading to sort table by this column'>Very bad health</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>49.21</td><td class='number'>34.92</td><td class='number'>11.69</td><td class='number'>3.18</td><td class='number'>1.01</td></tr><tr><td>Fareham North</td><td class='number'>46.07</td><td class='number'>35.93</td><td class='number'>13.7</td><td class='number'>3.33</td><td class='number'>0.97</td></tr><tr><td>Fareham North-West</td><td class='number'>45.28</td><td class='number'>36.59</td><td class='number'>13.62</td><td class='number'>3.76</td><td class='number'>0.76</td></tr><tr><td>Fareham South</td><td class='number'>44.75</td><td class='number'>36.51</td><td class='number'>13.47</td><td class='number'>3.94</td><td class='number'>1.33</td></tr><tr><td>Fareham West</td><td class='number'>43.24</td><td class='number'>37.14</td><td class='number'>15.21</td><td class='number'>3.54</td><td class='number'>0.87</td></tr><tr><td>Hill Head</td><td class='number'>47.22</td><td class='number'>35.76</td><td class='number'>13.17</td><td class='number'>3.07</td><td class='number'>0.78</td></tr><tr><td>Locks Heath</td><td class='number'>53.55</td><td class='number'>32.49</td><td class='number'>11.01</td><td class='number'>2.21</td><td class='number'>0.75</td></tr><tr><td>Park Gate</td><td class='number'>51.99</td><td class='number'>33.36</td><td class='number'>10.41</td><td class='number'>3.5</td><td class='number'>0.74</td></tr><tr><td>Portchester East</td><td class='number'>41.73</td><td class='number'>37.82</td><td class='number'>15.31</td><td class='number'>4</td><td class='number'>1.14</td></tr><tr><td>Portchester West</td><td class='number'>47.31</td><td class='number'>36.53</td><td class='number'>12.25</td><td class='number'>3.08</td><td class='number'>0.83</td></tr><tr><td>Sarisbury</td><td class='number'>59.84</td><td class='number'>30.83</td><td class='number'>7.53</td><td class='number'>1.35</td><td class='number'>0.45</td></tr><tr><td>Stubbington</td><td class='number'>43.83</td><td class='number'>35.7</td><td class='number'>15.23</td><td class='number'>4.17</td><td class='number'>1.07</td></tr><tr><td>Titchfield</td><td class='number'>51.35</td><td class='number'>34.66</td><td class='number'>10.43</td><td class='number'>2.43</td><td class='number'>1.14</td></tr><tr><td>Titchfield Common</td><td class='number'>50.5</td><td class='number'>35.71</td><td class='number'>10.68</td><td class='number'>2.51</td><td class='number'>0.6</td></tr><tr><td>Warsash</td><td class='number'>54.63</td><td class='number'>33.29</td><td class='number'>8.73</td><td class='number'>2.45</td><td class='number'>0.9</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(7,1);'/></p></div>
+<div class="charts" id="chartProfile7_0"></div>
+<script type="text/javascript">
+displayBarChart(7, 0, heading7);
+</script>
+<div class="tables" id="tableProfile8_0_0_VIS"><h4 class='tableHeading'>Unpaid Care (QS301EW)</h4><table id='profileTable8_0_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Provision of unpaid care</th><th title='click on column heading to sort table by this column'>Provides no unpaid care</th><th title='click on column heading to sort table by this column'>Provides 1 to 19 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 20 to 49 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 50 or more hours unpaid care a week</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>56,075,912</td><td class='number'>50,275,666</td><td class='number'>3,665,072</td><td class='number'>775,189</td><td class='number'>1,359,985</td></tr><tr><td>Hampshire</td><td class='number'>1,317,788</td><td class='number'>1,184,850</td><td class='number'>92,224</td><td class='number'>14,286</td><td class='number'>26,428</td></tr><tr><td>Fareham</td><td class='number'>111,581</td><td class='number'>99,702</td><td class='number'>8,382</td><td class='number'>1,198</td><td class='number'>2,299</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(8,0);'/></p></div>
+<div class="tables" id="tableProfile8_0_1_HID"><h4 class='tableHeading'>Unpaid Care (QS301EW)</h4><table id='profileTable8_0_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>Provides no unpaid care</th><th title='click on column heading to sort table by this column'>Provides 1 to 19 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 20 to 49 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 50 or more hours unpaid care a week</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>89.66</td><td class='number'>6.54</td><td class='number'>1.38</td><td class='number'>2.43</td></tr><tr><td>Hampshire</td><td class='number'>89.91</td><td class='number'>7</td><td class='number'>1.08</td><td class='number'>2.01</td></tr><tr><td>Fareham</td><td class='number'>89.35</td><td class='number'>7.51</td><td class='number'>1.07</td><td class='number'>2.06</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(8,0);'/></p></div>
+<div class="tables" id="tableProfile8_1_0_VIS"><h4 class='tableHeading'>Unpaid Care (QS301EW)</h4><table id='profileTable8_1_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Provision of unpaid care</th><th title='click on column heading to sort table by this column'>Provides no unpaid care</th><th title='click on column heading to sort table by this column'>Provides 1 to 19 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 20 to 49 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 50 or more hours unpaid care a week</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>7,462</td><td class='number'>6,721</td><td class='number'>518</td><td class='number'>84</td><td class='number'>139</td></tr><tr><td>Fareham North</td><td class='number'>7,287</td><td class='number'>6,539</td><td class='number'>532</td><td class='number'>77</td><td class='number'>139</td></tr><tr><td>Fareham North-West</td><td class='number'>7,401</td><td class='number'>6,677</td><td class='number'>461</td><td class='number'>104</td><td class='number'>159</td></tr><tr><td>Fareham South</td><td class='number'>7,231</td><td class='number'>6,538</td><td class='number'>466</td><td class='number'>82</td><td class='number'>145</td></tr><tr><td>Fareham West</td><td class='number'>6,438</td><td class='number'>5,701</td><td class='number'>509</td><td class='number'>78</td><td class='number'>150</td></tr><tr><td>Hill Head</td><td class='number'>7,170</td><td class='number'>6,294</td><td class='number'>642</td><td class='number'>89</td><td class='number'>145</td></tr><tr><td>Locks Heath</td><td class='number'>7,104</td><td class='number'>6,338</td><td class='number'>580</td><td class='number'>62</td><td class='number'>124</td></tr><tr><td>Park Gate</td><td class='number'>7,811</td><td class='number'>7,071</td><td class='number'>525</td><td class='number'>74</td><td class='number'>141</td></tr><tr><td>Portchester East</td><td class='number'>10,882</td><td class='number'>9,531</td><td class='number'>911</td><td class='number'>146</td><td class='number'>294</td></tr><tr><td>Portchester West</td><td class='number'>6,907</td><td class='number'>6,116</td><td class='number'>578</td><td class='number'>74</td><td class='number'>139</td></tr><tr><td>Sarisbury</td><td class='number'>7,385</td><td class='number'>6,725</td><td class='number'>514</td><td class='number'>48</td><td class='number'>98</td></tr><tr><td>Stubbington</td><td class='number'>6,907</td><td class='number'>6,099</td><td class='number'>565</td><td class='number'>65</td><td class='number'>178</td></tr><tr><td>Titchfield</td><td class='number'>7,280</td><td class='number'>6,528</td><td class='number'>527</td><td class='number'>69</td><td class='number'>156</td></tr><tr><td>Titchfield Common</td><td class='number'>7,133</td><td class='number'>6,380</td><td class='number'>519</td><td class='number'>83</td><td class='number'>151</td></tr><tr><td>Warsash</td><td class='number'>7,183</td><td class='number'>6,444</td><td class='number'>535</td><td class='number'>63</td><td class='number'>141</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(8,1);'/></p></div>
+<div class="tables" id="tableProfile8_1_1_HID"><h4 class='tableHeading'>Unpaid Care (QS301EW)</h4><table id='profileTable8_1_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>Provides no unpaid care</th><th title='click on column heading to sort table by this column'>Provides 1 to 19 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 20 to 49 hours unpaid care a week</th><th title='click on column heading to sort table by this column'>Provides 50 or more hours unpaid care a week</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>90.07</td><td class='number'>6.94</td><td class='number'>1.13</td><td class='number'>1.86</td></tr><tr><td>Fareham North</td><td class='number'>89.74</td><td class='number'>7.3</td><td class='number'>1.06</td><td class='number'>1.91</td></tr><tr><td>Fareham North-West</td><td class='number'>90.22</td><td class='number'>6.23</td><td class='number'>1.41</td><td class='number'>2.15</td></tr><tr><td>Fareham South</td><td class='number'>90.42</td><td class='number'>6.44</td><td class='number'>1.13</td><td class='number'>2.01</td></tr><tr><td>Fareham West</td><td class='number'>88.55</td><td class='number'>7.91</td><td class='number'>1.21</td><td class='number'>2.33</td></tr><tr><td>Hill Head</td><td class='number'>87.78</td><td class='number'>8.95</td><td class='number'>1.24</td><td class='number'>2.02</td></tr><tr><td>Locks Heath</td><td class='number'>89.22</td><td class='number'>8.16</td><td class='number'>0.87</td><td class='number'>1.75</td></tr><tr><td>Park Gate</td><td class='number'>90.53</td><td class='number'>6.72</td><td class='number'>0.95</td><td class='number'>1.81</td></tr><tr><td>Portchester East</td><td class='number'>87.59</td><td class='number'>8.37</td><td class='number'>1.34</td><td class='number'>2.7</td></tr><tr><td>Portchester West</td><td class='number'>88.55</td><td class='number'>8.37</td><td class='number'>1.07</td><td class='number'>2.01</td></tr><tr><td>Sarisbury</td><td class='number'>91.06</td><td class='number'>6.96</td><td class='number'>0.65</td><td class='number'>1.33</td></tr><tr><td>Stubbington</td><td class='number'>88.3</td><td class='number'>8.18</td><td class='number'>0.94</td><td class='number'>2.58</td></tr><tr><td>Titchfield</td><td class='number'>89.67</td><td class='number'>7.24</td><td class='number'>0.95</td><td class='number'>2.14</td></tr><tr><td>Titchfield Common</td><td class='number'>89.44</td><td class='number'>7.28</td><td class='number'>1.16</td><td class='number'>2.12</td></tr><tr><td>Warsash</td><td class='number'>89.71</td><td class='number'>7.45</td><td class='number'>0.88</td><td class='number'>1.96</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(8,1);'/></p></div>
+<div class="charts" id="chartProfile8_0"></div>
+<script type="text/javascript">
+displayBarChart(8, 0, heading8);
+</script>
+<h3 class='profileTitle'>&nbsp;Housing and Accommodation</h3><div class="tables" id="tableProfile12_0_0_VIS"><h4 class='tableHeading'>Household Size (QS406EW)</h4><table id='profileTable12_0_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Household size</th><th title='click on column heading to sort table by this column'>1 person in household</th><th title='click on column heading to sort table by this column'>2 people in household</th><th title='click on column heading to sort table by this column'>3 people in household</th><th title='click on column heading to sort table by this column'>4 people in household</th><th title='click on column heading to sort table by this column'>5 people in household</th><th title='click on column heading to sort table by this column'>6 people in household</th><th title='click on column heading to sort table by this column'>7 people in household</th><th title='click on column heading to sort table by this column'>8 or more people in household</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>23,366,044</td><td class='number'>7,067,261</td><td class='number'>7,998,031</td><td class='number'>3,641,569</td><td class='number'>3,031,078</td><td class='number'>1,085,188</td><td class='number'>386,784</td><td class='number'>92,734</td><td class='number'>63,399</td></tr><tr><td>Hampshire</td><td class='number'>545,254</td><td class='number'>145,623</td><td class='number'>204,410</td><td class='number'>85,066</td><td class='number'>76,776</td><td class='number'>24,164</td><td class='number'>6,976</td><td class='number'>1,525</td><td class='number'>714</td></tr><tr><td>Fareham</td><td class='number'>46,579</td><td class='number'>11,814</td><td class='number'>18,320</td><td class='number'>7,461</td><td class='number'>6,507</td><td class='number'>1,839</td><td class='number'>465</td><td class='number'>132</td><td class='number'>41</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(12,0);'/></p></div>
+<div class="tables" id="tableProfile12_0_1_HID"><h4 class='tableHeading'>Household Size (QS406EW)</h4><table id='profileTable12_0_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>1 person in household</th><th title='click on column heading to sort table by this column'>2 people in household</th><th title='click on column heading to sort table by this column'>3 people in household</th><th title='click on column heading to sort table by this column'>4 people in household</th><th title='click on column heading to sort table by this column'>5 people in household</th><th title='click on column heading to sort table by this column'>6 people in household</th><th title='click on column heading to sort table by this column'>7 people in household</th><th title='click on column heading to sort table by this column'>8 or more people in household</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>30.25</td><td class='number'>34.23</td><td class='number'>15.58</td><td class='number'>12.97</td><td class='number'>4.64</td><td class='number'>1.66</td><td class='number'>0.4</td><td class='number'>0.27</td></tr><tr><td>Hampshire</td><td class='number'>26.71</td><td class='number'>37.49</td><td class='number'>15.6</td><td class='number'>14.08</td><td class='number'>4.43</td><td class='number'>1.28</td><td class='number'>0.28</td><td class='number'>0.13</td></tr><tr><td>Fareham</td><td class='number'>25.36</td><td class='number'>39.33</td><td class='number'>16.02</td><td class='number'>13.97</td><td class='number'>3.95</td><td class='number'>1</td><td class='number'>0.28</td><td class='number'>0.09</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(12,0);'/></p></div>
+<div class="tables" id="tableProfile12_1_0_VIS"><h4 class='tableHeading'>Household Size (QS406EW)</h4><table id='profileTable12_1_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Household size</th><th title='click on column heading to sort table by this column'>1 person in household</th><th title='click on column heading to sort table by this column'>2 people in household</th><th title='click on column heading to sort table by this column'>3 people in household</th><th title='click on column heading to sort table by this column'>4 people in household</th><th title='click on column heading to sort table by this column'>5 people in household</th><th title='click on column heading to sort table by this column'>6 people in household</th><th title='click on column heading to sort table by this column'>7 people in household</th><th title='click on column heading to sort table by this column'>8 or more people in household</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>3,162</td><td class='number'>910</td><td class='number'>1,178</td><td class='number'>466</td><td class='number'>446</td><td class='number'>126</td><td class='number'>26</td><td class='number'>8</td><td class='number'>2</td></tr><tr><td>Fareham North</td><td class='number'>3,054</td><td class='number'>815</td><td class='number'>1,220</td><td class='number'>454</td><td class='number'>410</td><td class='number'>113</td><td class='number'>26</td><td class='number'>9</td><td class='number'>7</td></tr><tr><td>Fareham North-West</td><td class='number'>3,062</td><td class='number'>777</td><td class='number'>1,152</td><td class='number'>559</td><td class='number'>365</td><td class='number'>141</td><td class='number'>50</td><td class='number'>14</td><td class='number'>4</td></tr><tr><td>Fareham South</td><td class='number'>3,089</td><td class='number'>922</td><td class='number'>1,076</td><td class='number'>498</td><td class='number'>399</td><td class='number'>138</td><td class='number'>43</td><td class='number'>12</td><td class='number'>1</td></tr><tr><td>Fareham West</td><td class='number'>2,871</td><td class='number'>770</td><td class='number'>1,283</td><td class='number'>405</td><td class='number'>289</td><td class='number'>87</td><td class='number'>30</td><td class='number'>6</td><td class='number'>1</td></tr><tr><td>Hill Head</td><td class='number'>3,118</td><td class='number'>838</td><td class='number'>1,281</td><td class='number'>442</td><td class='number'>425</td><td class='number'>110</td><td class='number'>18</td><td class='number'>4</td><td class='number'>0</td></tr><tr><td>Locks Heath</td><td class='number'>2,854</td><td class='number'>666</td><td class='number'>1,067</td><td class='number'>481</td><td class='number'>452</td><td class='number'>132</td><td class='number'>30</td><td class='number'>24</td><td class='number'>2</td></tr><tr><td>Park Gate</td><td class='number'>3,189</td><td class='number'>776</td><td class='number'>1,216</td><td class='number'>546</td><td class='number'>498</td><td class='number'>120</td><td class='number'>24</td><td class='number'>6</td><td class='number'>3</td></tr><tr><td>Portchester East</td><td class='number'>4,807</td><td class='number'>1,367</td><td class='number'>1,902</td><td class='number'>733</td><td class='number'>594</td><td class='number'>149</td><td class='number'>49</td><td class='number'>9</td><td class='number'>4</td></tr><tr><td>Portchester West</td><td class='number'>2,884</td><td class='number'>676</td><td class='number'>1,197</td><td class='number'>475</td><td class='number'>408</td><td class='number'>98</td><td class='number'>23</td><td class='number'>6</td><td class='number'>1</td></tr><tr><td>Sarisbury</td><td class='number'>2,784</td><td class='number'>441</td><td class='number'>1,082</td><td class='number'>524</td><td class='number'>570</td><td class='number'>140</td><td class='number'>22</td><td class='number'>4</td><td class='number'>1</td></tr><tr><td>Stubbington</td><td class='number'>2,913</td><td class='number'>759</td><td class='number'>1,205</td><td class='number'>425</td><td class='number'>385</td><td class='number'>101</td><td class='number'>30</td><td class='number'>7</td><td class='number'>1</td></tr><tr><td>Titchfield</td><td class='number'>2,965</td><td class='number'>683</td><td class='number'>1,217</td><td class='number'>485</td><td class='number'>398</td><td class='number'>127</td><td class='number'>40</td><td class='number'>10</td><td class='number'>5</td></tr><tr><td>Titchfield Common</td><td class='number'>2,970</td><td class='number'>755</td><td class='number'>1,108</td><td class='number'>521</td><td class='number'>419</td><td class='number'>131</td><td class='number'>27</td><td class='number'>6</td><td class='number'>3</td></tr><tr><td>Warsash</td><td class='number'>2,857</td><td class='number'>659</td><td class='number'>1,136</td><td class='number'>447</td><td class='number'>449</td><td class='number'>126</td><td class='number'>27</td><td class='number'>7</td><td class='number'>6</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(12,1);'/></p></div>
+<div class="tables" id="tableProfile12_1_1_HID"><h4 class='tableHeading'>Household Size (QS406EW)</h4><table id='profileTable12_1_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>1 person in household</th><th title='click on column heading to sort table by this column'>2 people in household</th><th title='click on column heading to sort table by this column'>3 people in household</th><th title='click on column heading to sort table by this column'>4 people in household</th><th title='click on column heading to sort table by this column'>5 people in household</th><th title='click on column heading to sort table by this column'>6 people in household</th><th title='click on column heading to sort table by this column'>7 people in household</th><th title='click on column heading to sort table by this column'>8 or more people in household</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>28.78</td><td class='number'>37.25</td><td class='number'>14.74</td><td class='number'>14.1</td><td class='number'>3.98</td><td class='number'>0.82</td><td class='number'>0.25</td><td class='number'>0.06</td></tr><tr><td>Fareham North</td><td class='number'>26.69</td><td class='number'>39.95</td><td class='number'>14.87</td><td class='number'>13.43</td><td class='number'>3.7</td><td class='number'>0.85</td><td class='number'>0.29</td><td class='number'>0.23</td></tr><tr><td>Fareham North-West</td><td class='number'>25.38</td><td class='number'>37.62</td><td class='number'>18.26</td><td class='number'>11.92</td><td class='number'>4.6</td><td class='number'>1.63</td><td class='number'>0.46</td><td class='number'>0.13</td></tr><tr><td>Fareham South</td><td class='number'>29.85</td><td class='number'>34.83</td><td class='number'>16.12</td><td class='number'>12.92</td><td class='number'>4.47</td><td class='number'>1.39</td><td class='number'>0.39</td><td class='number'>0.03</td></tr><tr><td>Fareham West</td><td class='number'>26.82</td><td class='number'>44.69</td><td class='number'>14.11</td><td class='number'>10.07</td><td class='number'>3.03</td><td class='number'>1.04</td><td class='number'>0.21</td><td class='number'>0.03</td></tr><tr><td>Hill Head</td><td class='number'>26.88</td><td class='number'>41.08</td><td class='number'>14.18</td><td class='number'>13.63</td><td class='number'>3.53</td><td class='number'>0.58</td><td class='number'>0.13</td><td class='number'>0</td></tr><tr><td>Locks Heath</td><td class='number'>23.34</td><td class='number'>37.39</td><td class='number'>16.85</td><td class='number'>15.84</td><td class='number'>4.63</td><td class='number'>1.05</td><td class='number'>0.84</td><td class='number'>0.07</td></tr><tr><td>Park Gate</td><td class='number'>24.33</td><td class='number'>38.13</td><td class='number'>17.12</td><td class='number'>15.62</td><td class='number'>3.76</td><td class='number'>0.75</td><td class='number'>0.19</td><td class='number'>0.09</td></tr><tr><td>Portchester East</td><td class='number'>28.44</td><td class='number'>39.57</td><td class='number'>15.25</td><td class='number'>12.36</td><td class='number'>3.1</td><td class='number'>1.02</td><td class='number'>0.19</td><td class='number'>0.08</td></tr><tr><td>Portchester West</td><td class='number'>23.44</td><td class='number'>41.5</td><td class='number'>16.47</td><td class='number'>14.15</td><td class='number'>3.4</td><td class='number'>0.8</td><td class='number'>0.21</td><td class='number'>0.03</td></tr><tr><td>Sarisbury</td><td class='number'>15.84</td><td class='number'>38.86</td><td class='number'>18.82</td><td class='number'>20.47</td><td class='number'>5.03</td><td class='number'>0.79</td><td class='number'>0.14</td><td class='number'>0.04</td></tr><tr><td>Stubbington</td><td class='number'>26.06</td><td class='number'>41.37</td><td class='number'>14.59</td><td class='number'>13.22</td><td class='number'>3.47</td><td class='number'>1.03</td><td class='number'>0.24</td><td class='number'>0.03</td></tr><tr><td>Titchfield</td><td class='number'>23.04</td><td class='number'>41.05</td><td class='number'>16.36</td><td class='number'>13.42</td><td class='number'>4.28</td><td class='number'>1.35</td><td class='number'>0.34</td><td class='number'>0.17</td></tr><tr><td>Titchfield Common</td><td class='number'>25.42</td><td class='number'>37.31</td><td class='number'>17.54</td><td class='number'>14.11</td><td class='number'>4.41</td><td class='number'>0.91</td><td class='number'>0.2</td><td class='number'>0.1</td></tr><tr><td>Warsash</td><td class='number'>23.07</td><td class='number'>39.76</td><td class='number'>15.65</td><td class='number'>15.72</td><td class='number'>4.41</td><td class='number'>0.95</td><td class='number'>0.25</td><td class='number'>0.21</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(12,1);'/></p></div>
+<div class="charts" id="chartProfile12_0"></div>
+<script type="text/javascript">
+displayBarChart(12, 0, heading12);
+</script>
+<h3 class='profileTitle'>&nbsp;Labour Market</h3><div class="tables" id="tableProfile15_0_0_VIS"><h4 class='tableHeading'>NS-SeC (QS607EW)</h4><table id='profileTable15_0_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: NS-SeC</th><th title='click on column heading to sort table by this column'>1. Higher managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>2. Lower managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>3. Intermediate occupations</th><th title='click on column heading to sort table by this column'>4. Small employers and own account workers</th><th title='click on column heading to sort table by this column'>5. Lower supervisory and technical occupations</th><th title='click on column heading to sort table by this column'>6. Semi-routine occupations</th><th title='click on column heading to sort table by this column'>7. Routine occupations</th><th title='click on column heading to sort table by this column'>8. Never worked and long-term unemployed</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>41,126,540</td><td class='number'>4,220,766</td><td class='number'>8,571,458</td><td class='number'>5,240,440</td><td class='number'>3,872,779</td><td class='number'>2,857,185</td><td class='number'>5,789,519</td><td class='number'>4,564,916</td><td class='number'>2,301,614</td></tr><tr><td>Hampshire</td><td class='number'>954,975</td><td class='number'>126,044</td><td class='number'>230,186</td><td class='number'>134,082</td><td class='number'>94,250</td><td class='number'>68,232</td><td class='number'>126,955</td><td class='number'>86,300</td><td class='number'>27,874</td></tr><tr><td>Fareham</td><td class='number'>81,198</td><td class='number'>10,707</td><td class='number'>20,900</td><td class='number'>12,287</td><td class='number'>7,431</td><td class='number'>5,737</td><td class='number'>10,432</td><td class='number'>6,545</td><td class='number'>1,925</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(15,0);'/></p></div>
+<div class="tables" id="tableProfile15_0_1_HID"><h4 class='tableHeading'>NS-SeC (QS607EW)</h4><table id='profileTable15_0_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>1. Higher managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>2. Lower managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>3. Intermediate occupations</th><th title='click on column heading to sort table by this column'>4. Small employers and own account workers</th><th title='click on column heading to sort table by this column'>5. Lower supervisory and technical occupations</th><th title='click on column heading to sort table by this column'>6. Semi-routine occupations</th><th title='click on column heading to sort table by this column'>7. Routine occupations</th><th title='click on column heading to sort table by this column'>8. Never worked and long-term unemployed</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>10.26</td><td class='number'>20.84</td><td class='number'>12.74</td><td class='number'>9.42</td><td class='number'>6.95</td><td class='number'>14.08</td><td class='number'>11.1</td><td class='number'>5.6</td></tr><tr><td>Hampshire</td><td class='number'>13.2</td><td class='number'>24.1</td><td class='number'>14.04</td><td class='number'>9.87</td><td class='number'>7.14</td><td class='number'>13.29</td><td class='number'>9.04</td><td class='number'>2.92</td></tr><tr><td>Fareham</td><td class='number'>13.19</td><td class='number'>25.74</td><td class='number'>15.13</td><td class='number'>9.15</td><td class='number'>7.07</td><td class='number'>12.85</td><td class='number'>8.06</td><td class='number'>2.37</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(15,0);'/></p></div>
+<div class="tables" id="tableProfile15_1_0_VIS"><h4 class='tableHeading'>NS-SeC (QS607EW)</h4><table id='profileTable15_1_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: NS-SeC</th><th title='click on column heading to sort table by this column'>1. Higher managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>2. Lower managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>3. Intermediate occupations</th><th title='click on column heading to sort table by this column'>4. Small employers and own account workers</th><th title='click on column heading to sort table by this column'>5. Lower supervisory and technical occupations</th><th title='click on column heading to sort table by this column'>6. Semi-routine occupations</th><th title='click on column heading to sort table by this column'>7. Routine occupations</th><th title='click on column heading to sort table by this column'>8. Never worked and long-term unemployed</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>5,426</td><td class='number'>771</td><td class='number'>1,407</td><td class='number'>833</td><td class='number'>480</td><td class='number'>330</td><td class='number'>688</td><td class='number'>433</td><td class='number'>151</td></tr><tr><td>Fareham North</td><td class='number'>5,156</td><td class='number'>718</td><td class='number'>1,407</td><td class='number'>771</td><td class='number'>395</td><td class='number'>368</td><td class='number'>653</td><td class='number'>387</td><td class='number'>149</td></tr><tr><td>Fareham North-West</td><td class='number'>5,402</td><td class='number'>470</td><td class='number'>1,146</td><td class='number'>809</td><td class='number'>457</td><td class='number'>466</td><td class='number'>879</td><td class='number'>615</td><td class='number'>185</td></tr><tr><td>Fareham South</td><td class='number'>5,332</td><td class='number'>376</td><td class='number'>1,013</td><td class='number'>717</td><td class='number'>468</td><td class='number'>495</td><td class='number'>1,019</td><td class='number'>681</td><td class='number'>239</td></tr><tr><td>Fareham West</td><td class='number'>4,788</td><td class='number'>568</td><td class='number'>1,271</td><td class='number'>748</td><td class='number'>371</td><td class='number'>391</td><td class='number'>696</td><td class='number'>394</td><td class='number'>96</td></tr><tr><td>Hill Head</td><td class='number'>5,112</td><td class='number'>831</td><td class='number'>1,447</td><td class='number'>812</td><td class='number'>433</td><td class='number'>288</td><td class='number'>584</td><td class='number'>306</td><td class='number'>78</td></tr><tr><td>Locks Heath</td><td class='number'>5,148</td><td class='number'>787</td><td class='number'>1,426</td><td class='number'>803</td><td class='number'>452</td><td class='number'>291</td><td class='number'>591</td><td class='number'>342</td><td class='number'>81</td></tr><tr><td>Park Gate</td><td class='number'>5,661</td><td class='number'>751</td><td class='number'>1,496</td><td class='number'>937</td><td class='number'>500</td><td class='number'>405</td><td class='number'>666</td><td class='number'>433</td><td class='number'>135</td></tr><tr><td>Portchester East</td><td class='number'>7,930</td><td class='number'>766</td><td class='number'>1,762</td><td class='number'>1,227</td><td class='number'>860</td><td class='number'>639</td><td class='number'>1,145</td><td class='number'>890</td><td class='number'>189</td></tr><tr><td>Portchester West</td><td class='number'>5,170</td><td class='number'>701</td><td class='number'>1,302</td><td class='number'>822</td><td class='number'>457</td><td class='number'>382</td><td class='number'>707</td><td class='number'>397</td><td class='number'>94</td></tr><tr><td>Sarisbury</td><td class='number'>5,328</td><td class='number'>986</td><td class='number'>1,699</td><td class='number'>762</td><td class='number'>519</td><td class='number'>316</td><td class='number'>385</td><td class='number'>250</td><td class='number'>84</td></tr><tr><td>Stubbington</td><td class='number'>4,842</td><td class='number'>617</td><td class='number'>1,232</td><td class='number'>764</td><td class='number'>472</td><td class='number'>320</td><td class='number'>638</td><td class='number'>376</td><td class='number'>110</td></tr><tr><td>Titchfield</td><td class='number'>5,305</td><td class='number'>821</td><td class='number'>1,473</td><td class='number'>735</td><td class='number'>517</td><td class='number'>337</td><td class='number'>599</td><td class='number'>350</td><td class='number'>145</td></tr><tr><td>Titchfield Common</td><td class='number'>5,322</td><td class='number'>694</td><td class='number'>1,351</td><td class='number'>833</td><td class='number'>518</td><td class='number'>424</td><td class='number'>660</td><td class='number'>411</td><td class='number'>108</td></tr><tr><td>Warsash</td><td class='number'>5,276</td><td class='number'>850</td><td class='number'>1,468</td><td class='number'>714</td><td class='number'>532</td><td class='number'>285</td><td class='number'>522</td><td class='number'>280</td><td class='number'>81</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(15,1);'/></p></div>
+<div class="tables" id="tableProfile15_1_1_HID"><h4 class='tableHeading'>NS-SeC (QS607EW)</h4><table id='profileTable15_1_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>1. Higher managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>2. Lower managerial, administrative and professional occupations</th><th title='click on column heading to sort table by this column'>3. Intermediate occupations</th><th title='click on column heading to sort table by this column'>4. Small employers and own account workers</th><th title='click on column heading to sort table by this column'>5. Lower supervisory and technical occupations</th><th title='click on column heading to sort table by this column'>6. Semi-routine occupations</th><th title='click on column heading to sort table by this column'>7. Routine occupations</th><th title='click on column heading to sort table by this column'>8. Never worked and long-term unemployed</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>14.21</td><td class='number'>25.93</td><td class='number'>15.35</td><td class='number'>8.85</td><td class='number'>6.08</td><td class='number'>12.68</td><td class='number'>7.98</td><td class='number'>2.78</td></tr><tr><td>Fareham North</td><td class='number'>13.93</td><td class='number'>27.29</td><td class='number'>14.95</td><td class='number'>7.66</td><td class='number'>7.14</td><td class='number'>12.66</td><td class='number'>7.51</td><td class='number'>2.89</td></tr><tr><td>Fareham North-West</td><td class='number'>8.7</td><td class='number'>21.21</td><td class='number'>14.98</td><td class='number'>8.46</td><td class='number'>8.63</td><td class='number'>16.27</td><td class='number'>11.38</td><td class='number'>3.42</td></tr><tr><td>Fareham South</td><td class='number'>7.05</td><td class='number'>19</td><td class='number'>13.45</td><td class='number'>8.78</td><td class='number'>9.28</td><td class='number'>19.11</td><td class='number'>12.77</td><td class='number'>4.48</td></tr><tr><td>Fareham West</td><td class='number'>11.86</td><td class='number'>26.55</td><td class='number'>15.62</td><td class='number'>7.75</td><td class='number'>8.17</td><td class='number'>14.54</td><td class='number'>8.23</td><td class='number'>2.01</td></tr><tr><td>Hill Head</td><td class='number'>16.26</td><td class='number'>28.31</td><td class='number'>15.88</td><td class='number'>8.47</td><td class='number'>5.63</td><td class='number'>11.42</td><td class='number'>5.99</td><td class='number'>1.53</td></tr><tr><td>Locks Heath</td><td class='number'>15.29</td><td class='number'>27.7</td><td class='number'>15.6</td><td class='number'>8.78</td><td class='number'>5.65</td><td class='number'>11.48</td><td class='number'>6.64</td><td class='number'>1.57</td></tr><tr><td>Park Gate</td><td class='number'>13.27</td><td class='number'>26.43</td><td class='number'>16.55</td><td class='number'>8.83</td><td class='number'>7.15</td><td class='number'>11.76</td><td class='number'>7.65</td><td class='number'>2.38</td></tr><tr><td>Portchester East</td><td class='number'>9.66</td><td class='number'>22.22</td><td class='number'>15.47</td><td class='number'>10.84</td><td class='number'>8.06</td><td class='number'>14.44</td><td class='number'>11.22</td><td class='number'>2.38</td></tr><tr><td>Portchester West</td><td class='number'>13.56</td><td class='number'>25.18</td><td class='number'>15.9</td><td class='number'>8.84</td><td class='number'>7.39</td><td class='number'>13.68</td><td class='number'>7.68</td><td class='number'>1.82</td></tr><tr><td>Sarisbury</td><td class='number'>18.51</td><td class='number'>31.89</td><td class='number'>14.3</td><td class='number'>9.74</td><td class='number'>5.93</td><td class='number'>7.23</td><td class='number'>4.69</td><td class='number'>1.58</td></tr><tr><td>Stubbington</td><td class='number'>12.74</td><td class='number'>25.44</td><td class='number'>15.78</td><td class='number'>9.75</td><td class='number'>6.61</td><td class='number'>13.18</td><td class='number'>7.77</td><td class='number'>2.27</td></tr><tr><td>Titchfield</td><td class='number'>15.48</td><td class='number'>27.77</td><td class='number'>13.85</td><td class='number'>9.75</td><td class='number'>6.35</td><td class='number'>11.29</td><td class='number'>6.6</td><td class='number'>2.73</td></tr><tr><td>Titchfield Common</td><td class='number'>13.04</td><td class='number'>25.39</td><td class='number'>15.65</td><td class='number'>9.73</td><td class='number'>7.97</td><td class='number'>12.4</td><td class='number'>7.72</td><td class='number'>2.03</td></tr><tr><td>Warsash</td><td class='number'>16.11</td><td class='number'>27.82</td><td class='number'>13.53</td><td class='number'>10.08</td><td class='number'>5.4</td><td class='number'>9.89</td><td class='number'>5.31</td><td class='number'>1.54</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(15,1);'/></p></div>
+<div class="charts" id="chartProfile15_0"></div>
+<script type="text/javascript">
+displayBarChart(15, 0, heading15);
+</script>
+<h3 class='profileTitle'>&nbsp;Travel to Work</h3><div class="tables" id="tableProfile17_0_0_VIS"><h4 class='tableHeading'>Method of Travel to Work (QS701EW)</h4><table id='profileTable17_0_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Method of travel to work</th><th title='click on column heading to sort table by this column'>Work mainly at or from home</th><th title='click on column heading to sort table by this column'>Underground, metro, light rail, tram</th><th title='click on column heading to sort table by this column'>Train</th><th title='click on column heading to sort table by this column'>Bus, minibus or coach</th><th title='click on column heading to sort table by this column'>Taxi</th><th title='click on column heading to sort table by this column'>Motorcycle, scooter or moped</th><th title='click on column heading to sort table by this column'>Driving a car or van</th><th title='click on column heading to sort table by this column'>Passenger in a car or van</th><th title='click on column heading to sort table by this column'>Bicycle</th><th title='click on column heading to sort table by this column'>On foot</th><th title='click on column heading to sort table by this column'>Other method of travel to work</th><th title='click on column heading to sort table by this column'>Not in employment</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>41,126,540</td><td class='number'>1,422,708</td><td class='number'>1,028,800</td><td class='number'>1,371,025</td><td class='number'>1,949,442</td><td class='number'>137,988</td><td class='number'>214,244</td><td class='number'>15,264,527</td><td class='number'>1,357,280</td><td class='number'>762,334</td><td class='number'>2,846,588</td><td class='number'>171,400</td><td class='number'>14,600,204</td></tr><tr><td>Hampshire</td><td class='number'>954,975</td><td class='number'>42,110</td><td class='number'>868</td><td class='number'>28,866</td><td class='number'>19,546</td><td class='number'>1,968</td><td class='number'>6,459</td><td class='number'>446,587</td><td class='number'>31,767</td><td class='number'>21,177</td><td class='number'>61,080</td><td class='number'>5,038</td><td class='number'>289,509</td></tr><tr><td>Fareham</td><td class='number'>81,198</td><td class='number'>3,003</td><td class='number'>46</td><td class='number'>2,113</td><td class='number'>1,083</td><td class='number'>153</td><td class='number'>739</td><td class='number'>40,036</td><td class='number'>2,632</td><td class='number'>2,095</td><td class='number'>4,014</td><td class='number'>531</td><td class='number'>24,753</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(17,0);'/></p></div>
+<div class="tables" id="tableProfile17_0_1_HID"><h4 class='tableHeading'>Method of Travel to Work (QS701EW)</h4><table id='profileTable17_0_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>Work mainly at or from home</th><th title='click on column heading to sort table by this column'>Underground, metro, light rail, tram</th><th title='click on column heading to sort table by this column'>Train</th><th title='click on column heading to sort table by this column'>Bus, minibus or coach</th><th title='click on column heading to sort table by this column'>Taxi</th><th title='click on column heading to sort table by this column'>Motorcycle, scooter or moped</th><th title='click on column heading to sort table by this column'>Driving a car or van</th><th title='click on column heading to sort table by this column'>Passenger in a car or van</th><th title='click on column heading to sort table by this column'>Bicycle</th><th title='click on column heading to sort table by this column'>On foot</th><th title='click on column heading to sort table by this column'>Other method of travel to work</th><th title='click on column heading to sort table by this column'>Not in employment</th></tr></thead><tbody><tr><td>England and Wales</td><td class='number'>3.46</td><td class='number'>2.5</td><td class='number'>3.33</td><td class='number'>4.74</td><td class='number'>0.34</td><td class='number'>0.52</td><td class='number'>37.12</td><td class='number'>3.3</td><td class='number'>1.85</td><td class='number'>6.92</td><td class='number'>0.42</td><td class='number'>35.5</td></tr><tr><td>Hampshire</td><td class='number'>4.41</td><td class='number'>0.09</td><td class='number'>3.02</td><td class='number'>2.05</td><td class='number'>0.21</td><td class='number'>0.68</td><td class='number'>46.76</td><td class='number'>3.33</td><td class='number'>2.22</td><td class='number'>6.4</td><td class='number'>0.53</td><td class='number'>30.32</td></tr><tr><td>Fareham</td><td class='number'>3.7</td><td class='number'>0.06</td><td class='number'>2.6</td><td class='number'>1.33</td><td class='number'>0.19</td><td class='number'>0.91</td><td class='number'>49.31</td><td class='number'>3.24</td><td class='number'>2.58</td><td class='number'>4.94</td><td class='number'>0.65</td><td class='number'>30.48</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(17,0);'/></p></div>
+<div class="tables" id="tableProfile17_1_0_VIS"><h4 class='tableHeading'>Method of Travel to Work (QS701EW)</h4><table id='profileTable17_1_0_VIS' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>All categories: Method of travel to work</th><th title='click on column heading to sort table by this column'>Work mainly at or from home</th><th title='click on column heading to sort table by this column'>Underground, metro, light rail, tram</th><th title='click on column heading to sort table by this column'>Train</th><th title='click on column heading to sort table by this column'>Bus, minibus or coach</th><th title='click on column heading to sort table by this column'>Taxi</th><th title='click on column heading to sort table by this column'>Motorcycle, scooter or moped</th><th title='click on column heading to sort table by this column'>Driving a car or van</th><th title='click on column heading to sort table by this column'>Passenger in a car or van</th><th title='click on column heading to sort table by this column'>Bicycle</th><th title='click on column heading to sort table by this column'>On foot</th><th title='click on column heading to sort table by this column'>Other method of travel to work</th><th title='click on column heading to sort table by this column'>Not in employment</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>5,426</td><td class='number'>210</td><td class='number'>6</td><td class='number'>151</td><td class='number'>109</td><td class='number'>16</td><td class='number'>46</td><td class='number'>2,417</td><td class='number'>159</td><td class='number'>146</td><td class='number'>532</td><td class='number'>29</td><td class='number'>1,605</td></tr><tr><td>Fareham North</td><td class='number'>5,156</td><td class='number'>198</td><td class='number'>2</td><td class='number'>222</td><td class='number'>64</td><td class='number'>12</td><td class='number'>56</td><td class='number'>2,320</td><td class='number'>139</td><td class='number'>119</td><td class='number'>327</td><td class='number'>22</td><td class='number'>1,675</td></tr><tr><td>Fareham North-West</td><td class='number'>5,402</td><td class='number'>124</td><td class='number'>1</td><td class='number'>150</td><td class='number'>102</td><td class='number'>16</td><td class='number'>81</td><td class='number'>2,532</td><td class='number'>216</td><td class='number'>132</td><td class='number'>299</td><td class='number'>23</td><td class='number'>1,726</td></tr><tr><td>Fareham South</td><td class='number'>5,332</td><td class='number'>114</td><td class='number'>1</td><td class='number'>188</td><td class='number'>105</td><td class='number'>21</td><td class='number'>51</td><td class='number'>2,244</td><td class='number'>210</td><td class='number'>165</td><td class='number'>425</td><td class='number'>33</td><td class='number'>1,775</td></tr><tr><td>Fareham West</td><td class='number'>4,788</td><td class='number'>173</td><td class='number'>1</td><td class='number'>156</td><td class='number'>80</td><td class='number'>10</td><td class='number'>40</td><td class='number'>2,205</td><td class='number'>149</td><td class='number'>132</td><td class='number'>192</td><td class='number'>32</td><td class='number'>1,618</td></tr><tr><td>Hill Head</td><td class='number'>5,112</td><td class='number'>213</td><td class='number'>2</td><td class='number'>77</td><td class='number'>43</td><td class='number'>6</td><td class='number'>56</td><td class='number'>2,424</td><td class='number'>149</td><td class='number'>205</td><td class='number'>163</td><td class='number'>26</td><td class='number'>1,748</td></tr><tr><td>Locks Heath</td><td class='number'>5,148</td><td class='number'>235</td><td class='number'>3</td><td class='number'>128</td><td class='number'>37</td><td class='number'>3</td><td class='number'>35</td><td class='number'>2,624</td><td class='number'>147</td><td class='number'>114</td><td class='number'>227</td><td class='number'>34</td><td class='number'>1,561</td></tr><tr><td>Park Gate</td><td class='number'>5,661</td><td class='number'>229</td><td class='number'>5</td><td class='number'>151</td><td class='number'>68</td><td class='number'>13</td><td class='number'>39</td><td class='number'>3,150</td><td class='number'>198</td><td class='number'>139</td><td class='number'>227</td><td class='number'>44</td><td class='number'>1,398</td></tr><tr><td>Portchester East</td><td class='number'>7,930</td><td class='number'>218</td><td class='number'>7</td><td class='number'>194</td><td class='number'>165</td><td class='number'>11</td><td class='number'>78</td><td class='number'>3,797</td><td class='number'>330</td><td class='number'>187</td><td class='number'>322</td><td class='number'>36</td><td class='number'>2,585</td></tr><tr><td>Portchester West</td><td class='number'>5,170</td><td class='number'>147</td><td class='number'>3</td><td class='number'>120</td><td class='number'>82</td><td class='number'>10</td><td class='number'>57</td><td class='number'>2,702</td><td class='number'>178</td><td class='number'>127</td><td class='number'>174</td><td class='number'>21</td><td class='number'>1,549</td></tr><tr><td>Sarisbury</td><td class='number'>5,328</td><td class='number'>324</td><td class='number'>3</td><td class='number'>154</td><td class='number'>22</td><td class='number'>4</td><td class='number'>37</td><td class='number'>3,060</td><td class='number'>124</td><td class='number'>97</td><td class='number'>223</td><td class='number'>42</td><td class='number'>1,238</td></tr><tr><td>Stubbington</td><td class='number'>4,842</td><td class='number'>141</td><td class='number'>5</td><td class='number'>70</td><td class='number'>62</td><td class='number'>6</td><td class='number'>45</td><td class='number'>2,258</td><td class='number'>139</td><td class='number'>175</td><td class='number'>192</td><td class='number'>28</td><td class='number'>1,721</td></tr><tr><td>Titchfield</td><td class='number'>5,305</td><td class='number'>200</td><td class='number'>4</td><td class='number'>131</td><td class='number'>45</td><td class='number'>7</td><td class='number'>47</td><td class='number'>2,644</td><td class='number'>172</td><td class='number'>122</td><td class='number'>260</td><td class='number'>45</td><td class='number'>1,628</td></tr><tr><td>Titchfield Common</td><td class='number'>5,322</td><td class='number'>181</td><td class='number'>1</td><td class='number'>111</td><td class='number'>53</td><td class='number'>9</td><td class='number'>45</td><td class='number'>2,965</td><td class='number'>193</td><td class='number'>128</td><td class='number'>218</td><td class='number'>26</td><td class='number'>1,392</td></tr><tr><td>Warsash</td><td class='number'>5,276</td><td class='number'>296</td><td class='number'>2</td><td class='number'>110</td><td class='number'>46</td><td class='number'>9</td><td class='number'>26</td><td class='number'>2,694</td><td class='number'>129</td><td class='number'>107</td><td class='number'>233</td><td class='number'>90</td><td class='number'>1,534</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(17,1);'/></p></div>
+<div class="tables" id="tableProfile17_1_1_HID"><h4 class='tableHeading'>Method of Travel to Work (QS701EW)</h4><table id='profileTable17_1_1_HID' class='tablesorter'><thead><tr><th>Location</th><th title='click on column heading to sort table by this column'>Work mainly at or from home</th><th title='click on column heading to sort table by this column'>Underground, metro, light rail, tram</th><th title='click on column heading to sort table by this column'>Train</th><th title='click on column heading to sort table by this column'>Bus, minibus or coach</th><th title='click on column heading to sort table by this column'>Taxi</th><th title='click on column heading to sort table by this column'>Motorcycle, scooter or moped</th><th title='click on column heading to sort table by this column'>Driving a car or van</th><th title='click on column heading to sort table by this column'>Passenger in a car or van</th><th title='click on column heading to sort table by this column'>Bicycle</th><th title='click on column heading to sort table by this column'>On foot</th><th title='click on column heading to sort table by this column'>Other method of travel to work</th><th title='click on column heading to sort table by this column'>Not in employment</th></tr></thead><tbody><tr><td>Fareham East</td><td class='number'>3.87</td><td class='number'>0.11</td><td class='number'>2.78</td><td class='number'>2.01</td><td class='number'>0.29</td><td class='number'>0.85</td><td class='number'>44.54</td><td class='number'>2.93</td><td class='number'>2.69</td><td class='number'>9.8</td><td class='number'>0.53</td><td class='number'>29.58</td></tr><tr><td>Fareham North</td><td class='number'>3.84</td><td class='number'>0.04</td><td class='number'>4.31</td><td class='number'>1.24</td><td class='number'>0.23</td><td class='number'>1.09</td><td class='number'>45</td><td class='number'>2.7</td><td class='number'>2.31</td><td class='number'>6.34</td><td class='number'>0.43</td><td class='number'>32.49</td></tr><tr><td>Fareham North-West</td><td class='number'>2.3</td><td class='number'>0.02</td><td class='number'>2.78</td><td class='number'>1.89</td><td class='number'>0.3</td><td class='number'>1.5</td><td class='number'>46.87</td><td class='number'>4</td><td class='number'>2.44</td><td class='number'>5.53</td><td class='number'>0.43</td><td class='number'>31.95</td></tr><tr><td>Fareham South</td><td class='number'>2.14</td><td class='number'>0.02</td><td class='number'>3.53</td><td class='number'>1.97</td><td class='number'>0.39</td><td class='number'>0.96</td><td class='number'>42.09</td><td class='number'>3.94</td><td class='number'>3.09</td><td class='number'>7.97</td><td class='number'>0.62</td><td class='number'>33.29</td></tr><tr><td>Fareham West</td><td class='number'>3.61</td><td class='number'>0.02</td><td class='number'>3.26</td><td class='number'>1.67</td><td class='number'>0.21</td><td class='number'>0.84</td><td class='number'>46.05</td><td class='number'>3.11</td><td class='number'>2.76</td><td class='number'>4.01</td><td class='number'>0.67</td><td class='number'>33.79</td></tr><tr><td>Hill Head</td><td class='number'>4.17</td><td class='number'>0.04</td><td class='number'>1.51</td><td class='number'>0.84</td><td class='number'>0.12</td><td class='number'>1.1</td><td class='number'>47.42</td><td class='number'>2.91</td><td class='number'>4.01</td><td class='number'>3.19</td><td class='number'>0.51</td><td class='number'>34.19</td></tr><tr><td>Locks Heath</td><td class='number'>4.56</td><td class='number'>0.06</td><td class='number'>2.49</td><td class='number'>0.72</td><td class='number'>0.06</td><td class='number'>0.68</td><td class='number'>50.97</td><td class='number'>2.86</td><td class='number'>2.21</td><td class='number'>4.41</td><td class='number'>0.66</td><td class='number'>30.32</td></tr><tr><td>Park Gate</td><td class='number'>4.05</td><td class='number'>0.09</td><td class='number'>2.67</td><td class='number'>1.2</td><td class='number'>0.23</td><td class='number'>0.69</td><td class='number'>55.64</td><td class='number'>3.5</td><td class='number'>2.46</td><td class='number'>4.01</td><td class='number'>0.78</td><td class='number'>24.7</td></tr><tr><td>Portchester East</td><td class='number'>2.75</td><td class='number'>0.09</td><td class='number'>2.45</td><td class='number'>2.08</td><td class='number'>0.14</td><td class='number'>0.98</td><td class='number'>47.88</td><td class='number'>4.16</td><td class='number'>2.36</td><td class='number'>4.06</td><td class='number'>0.45</td><td class='number'>32.6</td></tr><tr><td>Portchester West</td><td class='number'>2.84</td><td class='number'>0.06</td><td class='number'>2.32</td><td class='number'>1.59</td><td class='number'>0.19</td><td class='number'>1.1</td><td class='number'>52.26</td><td class='number'>3.44</td><td class='number'>2.46</td><td class='number'>3.37</td><td class='number'>0.41</td><td class='number'>29.96</td></tr><tr><td>Sarisbury</td><td class='number'>6.08</td><td class='number'>0.06</td><td class='number'>2.89</td><td class='number'>0.41</td><td class='number'>0.08</td><td class='number'>0.69</td><td class='number'>57.43</td><td class='number'>2.33</td><td class='number'>1.82</td><td class='number'>4.19</td><td class='number'>0.79</td><td class='number'>23.24</td></tr><tr><td>Stubbington</td><td class='number'>2.91</td><td class='number'>0.1</td><td class='number'>1.45</td><td class='number'>1.28</td><td class='number'>0.12</td><td class='number'>0.93</td><td class='number'>46.63</td><td class='number'>2.87</td><td class='number'>3.61</td><td class='number'>3.97</td><td class='number'>0.58</td><td class='number'>35.54</td></tr><tr><td>Titchfield</td><td class='number'>3.77</td><td class='number'>0.08</td><td class='number'>2.47</td><td class='number'>0.85</td><td class='number'>0.13</td><td class='number'>0.89</td><td class='number'>49.84</td><td class='number'>3.24</td><td class='number'>2.3</td><td class='number'>4.9</td><td class='number'>0.85</td><td class='number'>30.69</td></tr><tr><td>Titchfield Common</td><td class='number'>3.4</td><td class='number'>0.02</td><td class='number'>2.09</td><td class='number'>1</td><td class='number'>0.17</td><td class='number'>0.85</td><td class='number'>55.71</td><td class='number'>3.63</td><td class='number'>2.41</td><td class='number'>4.1</td><td class='number'>0.49</td><td class='number'>26.16</td></tr><tr><td>Warsash</td><td class='number'>5.61</td><td class='number'>0.04</td><td class='number'>2.08</td><td class='number'>0.87</td><td class='number'>0.17</td><td class='number'>0.49</td><td class='number'>51.06</td><td class='number'>2.45</td><td class='number'>2.03</td><td class='number'>4.42</td><td class='number'>1.71</td><td class='number'>29.08</td></tr></tbody></table><p><input type='button' value='counts/percentages' title='toggle cells between counts and percentages' onclick='toggleTable(17,1);'/></p></div>
+<div class="charts" id="chartProfile17_0"></div>
+<script type="text/javascript">
+displayBarChart(17, 0, heading17);
+</script>
+<script type="text/javascript">
+window.onload=function(){getBoundaries(strAreaCode,strAreaType,strParentAreaCode,strParentAreaType,true);};
+</script>
+<script type="text/javascript">
+$("#profileTable1_0_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'},7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'},19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}          }
+});
+$("#profileTable1_0_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable1_1_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'}, 7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'}, 19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}, 31: {sorter: 'commaNumber'},32: {sorter: 'commaNumber'},33: {sorter: 'commaNumber'},34: {sorter: 'commaNumber'},35: {sorter: 'commaNumber'},36: {sorter: 'commaNumber'},37: {sorter: 'commaNumber'},38: {sorter: 'commaNumber'},39: {sorter: 'commaNumber'},40: {sorter: 'commaNumber'},41: {sorter: 'commaNumber'},42: {sorter: 'commaNumber'}, 43: {sorter: 'commaNumber'},44: {sorter: 'commaNumber'},45: {sorter: 'commaNumber'},46: {sorter: 'commaNumber'},47: {sorter: 'commaNumber'},48: {sorter: 'commaNumber'},49: {sorter: 'commaNumber'},50: {sorter: 'commaNumber'},51: {sorter: 'commaNumber'},52: {sorter: 'commaNumber'},53: {sorter: 'commaNumber'},54: {sorter: 'commaNumber'}, 55: {sorter: 'commaNumber'},56: {sorter: 'commaNumber'},57: {sorter: 'commaNumber'},58: {sorter: 'commaNumber'},59: {sorter: 'commaNumber'},60: {sorter: 'commaNumber'},61: {sorter: 'commaNumber'},62: {sorter: 'commaNumber'},63: {sorter: 'commaNumber'},64: {sorter: 'commaNumber'},65: {sorter: 'commaNumber'},66: {sorter: 'commaNumber'}, 67: {sorter: 'commaNumber'},68: {sorter: 'commaNumber'},69: {sorter: 'commaNumber'},70: {sorter: 'commaNumber'},71: {sorter: 'commaNumber'},72: {sorter: 'commaNumber'}}
+});
+$("#profileTable1_1_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable7_0_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'},7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'},19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}          }
+});
+$("#profileTable7_0_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable7_1_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'}, 7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'}, 19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}, 31: {sorter: 'commaNumber'},32: {sorter: 'commaNumber'},33: {sorter: 'commaNumber'},34: {sorter: 'commaNumber'},35: {sorter: 'commaNumber'},36: {sorter: 'commaNumber'},37: {sorter: 'commaNumber'},38: {sorter: 'commaNumber'},39: {sorter: 'commaNumber'},40: {sorter: 'commaNumber'},41: {sorter: 'commaNumber'},42: {sorter: 'commaNumber'}, 43: {sorter: 'commaNumber'},44: {sorter: 'commaNumber'},45: {sorter: 'commaNumber'},46: {sorter: 'commaNumber'},47: {sorter: 'commaNumber'},48: {sorter: 'commaNumber'},49: {sorter: 'commaNumber'},50: {sorter: 'commaNumber'},51: {sorter: 'commaNumber'},52: {sorter: 'commaNumber'},53: {sorter: 'commaNumber'},54: {sorter: 'commaNumber'}, 55: {sorter: 'commaNumber'},56: {sorter: 'commaNumber'},57: {sorter: 'commaNumber'},58: {sorter: 'commaNumber'},59: {sorter: 'commaNumber'},60: {sorter: 'commaNumber'},61: {sorter: 'commaNumber'},62: {sorter: 'commaNumber'},63: {sorter: 'commaNumber'},64: {sorter: 'commaNumber'},65: {sorter: 'commaNumber'},66: {sorter: 'commaNumber'}, 67: {sorter: 'commaNumber'},68: {sorter: 'commaNumber'},69: {sorter: 'commaNumber'},70: {sorter: 'commaNumber'},71: {sorter: 'commaNumber'},72: {sorter: 'commaNumber'}}
+});
+$("#profileTable7_1_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable8_0_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'},7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'},19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}          }
+});
+$("#profileTable8_0_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable8_1_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'}, 7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'}, 19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}, 31: {sorter: 'commaNumber'},32: {sorter: 'commaNumber'},33: {sorter: 'commaNumber'},34: {sorter: 'commaNumber'},35: {sorter: 'commaNumber'},36: {sorter: 'commaNumber'},37: {sorter: 'commaNumber'},38: {sorter: 'commaNumber'},39: {sorter: 'commaNumber'},40: {sorter: 'commaNumber'},41: {sorter: 'commaNumber'},42: {sorter: 'commaNumber'}, 43: {sorter: 'commaNumber'},44: {sorter: 'commaNumber'},45: {sorter: 'commaNumber'},46: {sorter: 'commaNumber'},47: {sorter: 'commaNumber'},48: {sorter: 'commaNumber'},49: {sorter: 'commaNumber'},50: {sorter: 'commaNumber'},51: {sorter: 'commaNumber'},52: {sorter: 'commaNumber'},53: {sorter: 'commaNumber'},54: {sorter: 'commaNumber'}, 55: {sorter: 'commaNumber'},56: {sorter: 'commaNumber'},57: {sorter: 'commaNumber'},58: {sorter: 'commaNumber'},59: {sorter: 'commaNumber'},60: {sorter: 'commaNumber'},61: {sorter: 'commaNumber'},62: {sorter: 'commaNumber'},63: {sorter: 'commaNumber'},64: {sorter: 'commaNumber'},65: {sorter: 'commaNumber'},66: {sorter: 'commaNumber'}, 67: {sorter: 'commaNumber'},68: {sorter: 'commaNumber'},69: {sorter: 'commaNumber'},70: {sorter: 'commaNumber'},71: {sorter: 'commaNumber'},72: {sorter: 'commaNumber'}}
+});
+$("#profileTable8_1_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable12_0_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'},7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'},19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}          }
+});
+$("#profileTable12_0_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable12_1_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'}, 7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'}, 19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}, 31: {sorter: 'commaNumber'},32: {sorter: 'commaNumber'},33: {sorter: 'commaNumber'},34: {sorter: 'commaNumber'},35: {sorter: 'commaNumber'},36: {sorter: 'commaNumber'},37: {sorter: 'commaNumber'},38: {sorter: 'commaNumber'},39: {sorter: 'commaNumber'},40: {sorter: 'commaNumber'},41: {sorter: 'commaNumber'},42: {sorter: 'commaNumber'}, 43: {sorter: 'commaNumber'},44: {sorter: 'commaNumber'},45: {sorter: 'commaNumber'},46: {sorter: 'commaNumber'},47: {sorter: 'commaNumber'},48: {sorter: 'commaNumber'},49: {sorter: 'commaNumber'},50: {sorter: 'commaNumber'},51: {sorter: 'commaNumber'},52: {sorter: 'commaNumber'},53: {sorter: 'commaNumber'},54: {sorter: 'commaNumber'}, 55: {sorter: 'commaNumber'},56: {sorter: 'commaNumber'},57: {sorter: 'commaNumber'},58: {sorter: 'commaNumber'},59: {sorter: 'commaNumber'},60: {sorter: 'commaNumber'},61: {sorter: 'commaNumber'},62: {sorter: 'commaNumber'},63: {sorter: 'commaNumber'},64: {sorter: 'commaNumber'},65: {sorter: 'commaNumber'},66: {sorter: 'commaNumber'}, 67: {sorter: 'commaNumber'},68: {sorter: 'commaNumber'},69: {sorter: 'commaNumber'},70: {sorter: 'commaNumber'},71: {sorter: 'commaNumber'},72: {sorter: 'commaNumber'}}
+});
+$("#profileTable12_1_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable15_0_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'},7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'},19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}          }
+});
+$("#profileTable15_0_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable15_1_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'}, 7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'}, 19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}, 31: {sorter: 'commaNumber'},32: {sorter: 'commaNumber'},33: {sorter: 'commaNumber'},34: {sorter: 'commaNumber'},35: {sorter: 'commaNumber'},36: {sorter: 'commaNumber'},37: {sorter: 'commaNumber'},38: {sorter: 'commaNumber'},39: {sorter: 'commaNumber'},40: {sorter: 'commaNumber'},41: {sorter: 'commaNumber'},42: {sorter: 'commaNumber'}, 43: {sorter: 'commaNumber'},44: {sorter: 'commaNumber'},45: {sorter: 'commaNumber'},46: {sorter: 'commaNumber'},47: {sorter: 'commaNumber'},48: {sorter: 'commaNumber'},49: {sorter: 'commaNumber'},50: {sorter: 'commaNumber'},51: {sorter: 'commaNumber'},52: {sorter: 'commaNumber'},53: {sorter: 'commaNumber'},54: {sorter: 'commaNumber'}, 55: {sorter: 'commaNumber'},56: {sorter: 'commaNumber'},57: {sorter: 'commaNumber'},58: {sorter: 'commaNumber'},59: {sorter: 'commaNumber'},60: {sorter: 'commaNumber'},61: {sorter: 'commaNumber'},62: {sorter: 'commaNumber'},63: {sorter: 'commaNumber'},64: {sorter: 'commaNumber'},65: {sorter: 'commaNumber'},66: {sorter: 'commaNumber'}, 67: {sorter: 'commaNumber'},68: {sorter: 'commaNumber'},69: {sorter: 'commaNumber'},70: {sorter: 'commaNumber'},71: {sorter: 'commaNumber'},72: {sorter: 'commaNumber'}}
+});
+$("#profileTable15_1_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable17_0_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'},7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'},19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}          }
+});
+$("#profileTable17_0_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+<script type="text/javascript">
+$("#profileTable17_1_0_VIS").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+// add custom sort (zero-based index)  this will sort the 2nd, 3rd and 4th columns (the area)
+// using the parser to remove the commas, so the numbers are ordered correctly
+// Calls the custom parser by it's name 'commaNumber'.
+headers: {1: {sorter: 'commaNumber'},2: {sorter: 'commaNumber'},3: {sorter: 'commaNumber'},4: {sorter: 'commaNumber'},5: {sorter: 'commaNumber'},6: {sorter: 'commaNumber'}, 7: {sorter: 'commaNumber'},8: {sorter: 'commaNumber'},9: {sorter: 'commaNumber'},10: {sorter: 'commaNumber'},11: {sorter: 'commaNumber'},12: {sorter: 'commaNumber'},13: {sorter: 'commaNumber'},14: {sorter: 'commaNumber'},15: {sorter: 'commaNumber'},16: {sorter: 'commaNumber'},17: {sorter: 'commaNumber'},18: {sorter: 'commaNumber'}, 19: {sorter: 'commaNumber'},20: {sorter: 'commaNumber'},21: {sorter: 'commaNumber'},22: {sorter: 'commaNumber'},23: {sorter: 'commaNumber'},24: {sorter: 'commaNumber'},25: {sorter: 'commaNumber'},26: {sorter: 'commaNumber'},27: {sorter: 'commaNumber'},28: {sorter: 'commaNumber'},29: {sorter: 'commaNumber'},30: {sorter: 'commaNumber'}, 31: {sorter: 'commaNumber'},32: {sorter: 'commaNumber'},33: {sorter: 'commaNumber'},34: {sorter: 'commaNumber'},35: {sorter: 'commaNumber'},36: {sorter: 'commaNumber'},37: {sorter: 'commaNumber'},38: {sorter: 'commaNumber'},39: {sorter: 'commaNumber'},40: {sorter: 'commaNumber'},41: {sorter: 'commaNumber'},42: {sorter: 'commaNumber'}, 43: {sorter: 'commaNumber'},44: {sorter: 'commaNumber'},45: {sorter: 'commaNumber'},46: {sorter: 'commaNumber'},47: {sorter: 'commaNumber'},48: {sorter: 'commaNumber'},49: {sorter: 'commaNumber'},50: {sorter: 'commaNumber'},51: {sorter: 'commaNumber'},52: {sorter: 'commaNumber'},53: {sorter: 'commaNumber'},54: {sorter: 'commaNumber'}, 55: {sorter: 'commaNumber'},56: {sorter: 'commaNumber'},57: {sorter: 'commaNumber'},58: {sorter: 'commaNumber'},59: {sorter: 'commaNumber'},60: {sorter: 'commaNumber'},61: {sorter: 'commaNumber'},62: {sorter: 'commaNumber'},63: {sorter: 'commaNumber'},64: {sorter: 'commaNumber'},65: {sorter: 'commaNumber'},66: {sorter: 'commaNumber'}, 67: {sorter: 'commaNumber'},68: {sorter: 'commaNumber'},69: {sorter: 'commaNumber'},70: {sorter: 'commaNumber'},71: {sorter: 'commaNumber'},72: {sorter: 'commaNumber'}}
+});
+$("#profileTable17_1_1_HID").tablesorter({
+// [0,1] where first number refers to column and second number refers to order: 0=ascending, 1=descending
+sortlist:[[0,1]],
+});
+//NOTE: activate tablesorter on table, but doesn't apply sort - user has to click on a column header to apply sort
+
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+/*
+ * The main stylesheet for the HTML5/CSS3 example
+ * which displays the results in an html table
+ * and uses css3 and javascript plug-ins to
+ * format and allow re-ordering of the data in
+ * the table.
+ */
+
+/* Makeshift CSS Reset */
+{
+	margin: 0;
+	padding: 0;
+}
+
+body, h1, h2, h3, p, label, li, input, option, a:link, a:visited, a:hover, a:active {
+   font-family: "Georgia", Verdana, Arial, Courier New, Courier, monospace !important;
+   font-size: 1em;
+   line-height: 1em;
+}
+
+h1, h2 {
+   font-family: "Georgia", Verdana, Arial, Courier New, Courier, monospace !important;
+   font-size: 1.5em;
+   line-height: 1.5em;
+   text-align: center;
+}
+
+/* Tell the browser to render HTML 5 elements as block */
+header, footer, aside, nav, section, article {
+	display: block;
+}
+header {
+   text-align: center;
+}
+
+body {
+	margin: 10 auto;
+	width: 98%;
+ 	min-width: 780px; 
+}
+
+.profileTitle {
+   background-color: grey;
+   color: white;
+}
+
+.charts {
+   width:100%;
+   max-width: 900px;
+   margin-left: 10px;
+   margin-right: auto;
+}
+
+#map {
+   width: 600px;
+   height: 600px;
+   border: 1px solid black;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+
+/* Allow toggling between count and percentage table for each profile */
+/* profileTablen1_n2_n3_: n1 = profile, n2 = main table or subTable (wards), n3 = counts or percentages table */
+#tableProfile0_0_0_VIS {
+   display: block;
+}
+#tableProfile0_0_0_HID {
+   display: none;
+}
+#tableProfile0_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile0_0_1_HID {
+   display: none;
+}
+
+#tableProfile0_1_0_VIS {
+   display: block;
+}
+#tableProfile0_1_0_HID {
+   display: none;
+}
+#tableProfile0_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile0_1_1_HID {
+   display: none;
+}
+
+#tableProfile1_0_0_VIS {
+   display: block;
+}
+#tableProfile1_0_0_HID {
+   display: none;
+}
+#tableProfile1_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile1_0_1_HID {
+   display: none;
+}
+
+#tableProfile1_1_0_VIS {
+   display: block;
+}
+#tableProfile1_1_0_HID {
+   display: none;
+}
+#tableProfile1_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile1_1_1_HID {
+   display: none;
+}
+
+#tableProfile2_0_0_VIS {
+   display: block;
+}
+#tableProfile2_0_0_HID {
+   display: none;
+}
+#tableProfile2_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile2_0_1_HID {
+   display: none;
+}
+
+#tableProfile2_1_0_VIS {
+   display: block;
+}
+#tableProfile2_1_0_HID {
+   display: none;
+}
+#tableProfile2_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile2_1_1_HID {
+   display: none;
+}
+
+#tableProfile3_0_0_VIS {
+   display: block;
+}
+#tableProfile3_0_0_HID {
+   display: none;
+}
+#tableProfile3_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile3_0_1_HID {
+   display: none;
+}
+#tableProfile3_1_0_VIS {
+   display: block;
+}
+#tableProfile3_1_0_HID {
+   display: none;
+}
+#tableProfile3_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile3_1_1_HID {
+   display: none;
+}
+
+#tableProfile4_0_0_VIS {
+   display: block;
+}
+#tableProfile4_0_0_HID {
+   display: none;
+}
+#tableProfile4_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile4_0_1_HID {
+   display: none;
+}
+#tableProfile4_1_0_VIS {
+   display: block;
+}
+#tableProfile4_1_0_HID {
+   display: none;
+}
+#tableProfile4_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile4_1_1_HID {
+   display: none;
+}
+
+#tableProfile5_0_0_VIS {
+   display: block;
+}
+#tableProfile5_0_0_HID {
+   display: none;
+}
+#tableProfile5_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile5_0_1_HID {
+   display: none;
+}
+#tableProfile5_1_0_VIS {
+   display: block;
+}
+#tableProfile5_1_0_HID {
+   display: none;
+}
+#tableProfile5_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile5_1_1_HID {
+   display: none;
+}
+
+#tableProfile6_0_0_VIS {
+   display: block;
+}
+#tableProfile6_0_0_HID {
+   display: none;
+}
+#tableProfile6_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile6_0_1_HID {
+   display: none;
+}
+#tableProfile6_1_0_VIS {
+   display: block;
+}
+#tableProfile6_1_0_HID {
+   display: none;
+}
+#tableProfile6_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile6_1_1_HID {
+   display: none;
+}
+#tableProfile7_0_0_VIS {
+   display: block;
+}
+#tableProfile7_0_0_HID {
+   display: none;
+}
+#tableProfile7_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile7_0_1_HID {
+   display: none;
+}
+#tableProfile7_1_0_VIS {
+   display: block;
+}
+#tableProfile7_1_0_HID {
+   display: none;
+}
+#tableProfile7_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile7_1_1_HID {
+   display: none;
+}
+#tableProfile8_0_0_VIS {
+   display: block;
+}
+#tableProfile8_0_0_HID {
+   display: none;
+}
+#tableProfile8_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile8_0_1_HID {
+   display: none;
+}
+#tableProfile8_1_0_VIS {
+   display: block;
+}
+#tableProfile8_1_0_HID {
+   display: none;
+}
+#tableProfile8_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile8_1_1_HID {
+   display: none;
+}
+#tableProfile9_0_0_VIS {
+   display: block;
+}
+#tableProfile9_0_0_HID {
+   display: none;
+}
+#tableProfile9_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile9_0_1_HID {
+   display: none;
+}
+#tableProfile9_1_0_VIS {
+   display: block;
+}
+#tableProfile9_1_0_HID {
+   display: none;
+}
+#tableProfile9_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile9_1_1_HID {
+   display: none;
+}
+#tableProfile10_0_0_VIS {
+   display: block;
+}
+#tableProfile10_0_0_HID {
+   display: none;
+}
+#tableProfile10_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile10_0_1_HID {
+   display: none;
+}
+#tableProfile10_1_0_VIS {
+   display: block;
+}
+#tableProfile10_1_0_HID {
+   display: none;
+}
+#tableProfile10_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile10_1_1_HID {
+   display: none;
+}
+#tableProfile11_0_0_VIS {
+   display: block;
+}
+#tableProfile11_0_0_HID {
+   display: none;
+}
+#tableProfile11_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile11_0_1_HID {
+   display: none;
+}
+#tableProfile11_1_0_VIS {
+   display: block;
+}
+#tableProfile11_1_0_HID {
+   display: none;
+}
+#tableProfile11_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile11_1_1_HID {
+   display: none;
+}
+#tableProfile12_0_0_VIS {
+   display: block;
+}
+#tableProfile12_0_0_HID {
+   display: none;
+}
+#tableProfile12_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile12_0_1_HID {
+   display: none;
+}
+#tableProfile12_1_0_VIS {
+   display: block;
+}
+#tableProfile12_1_0_HID {
+   display: none;
+}
+#tableProfile12_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile12_1_1_HID {
+   display: none;
+}
+#tableProfile13_0_0_VIS {
+   display: block;
+}
+#tableProfile13_0_0_HID {
+   display: none;
+}
+#tableProfile13_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile13_0_1_HID {
+   display: none;
+}
+#tableProfile13_1_0_VIS {
+   display: block;
+}
+#tableProfile13_1_0_HID {
+   display: none;
+}
+#tableProfile13_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile13_1_1_HID {
+   display: none;
+}
+#tableProfile14_0_0_VIS {
+   display: block;
+}
+#tableProfile14_0_0_HID {
+   display: none;
+}
+#tableProfile14_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile14_0_1_HID {
+   display: none;
+}
+#tableProfile14_1_0_VIS {
+   display: block;
+}
+#tableProfile14_1_0_HID {
+   display: none;
+}
+#tableProfile14_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile14_1_1_HID {
+   display: none;
+}
+#tableProfile15_0_0_VIS {
+   display: block;
+}
+#tableProfile15_0_0_HID {
+   display: none;
+}
+#tableProfile15_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile15_0_1_HID {
+   display: none;
+}
+#tableProfile15_1_0_VIS {
+   display: block;
+}
+#tableProfile15_1_0_HID {
+   display: none;
+}
+#tableProfile15_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile15_1_1_HID {
+   display: none;
+}
+#tableProfile16_0_0_VIS {
+   display: block;
+}
+#tableProfile16_0_0_HID {
+   display: none;
+}
+#tableProfile16_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile16_0_1_HID {
+   display: none;
+}
+#tableProfile16_1_0_VIS {
+   display: block;
+}
+#tableProfile16_1_0_HID {
+   display: none;
+}
+#tableProfile16_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile16_1_1_HID {
+   display: none;
+}
+#tableProfile17_0_0_VIS {
+   display: block;
+}
+#tableProfile17_0_0_HID {
+   display: none;
+}
+#tableProfile17_0_1_VIS {
+   display: inline-block;
+}
+#tableProfile17_0_1_HID {
+   display: none;
+}
+#tableProfile17_1_0_VIS {
+   display: block;
+}
+#tableProfile17_1_0_HID {
+   display: none;
+}
+#tableProfile17_1_1_VIS {
+   display: inline-block;
+}
+#tableProfile17_1_1_HID {
+   display: none;
+}
+
+
+.display {
+   display: inline-block;
+}
+.hidden {
+   display: none;
+}
+
+
+/*
+ * The stylesheet for the HTML5/CSS3 example.
+ * This stylesheet is used in conjuntion with
+ * the tablesorter plug-in to allow dynamic
+ * re-ordering of the html table produced.
+ */
+
+/* tables */
+table.tablesorter {
+ font-family:arial;
+ /*background-color: #EEEEEE; */
+ margin:10px 0pt 15px;
+ /*font-size: 8pt;*/
+ font-size: 0.8em;
+ /*width: 70%;*/
+ text-align: left;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+ background-color: #c8f2c7;
+ border: 1px solid #FFF;
+ /*font-size: 8pt;*/
+ padding: 0.3em;
+ /*padding-right: 0.8em;*/
+}
+
+
+table.tablesorter thead tr .header {
+/* background-image: url(../img/bg.gif); */
+ background-image: none;
+ background-repeat: no-repeat;
+/* background-position: right top;
+/* background-position: 103% 95%;*/
+ background-position: 103% 6%;
+ cursor: pointer;
+}
+table.tablesorter thead tr .headerSortUp {
+ background-image: url(../img/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+ background-image: url(../img/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #a1cc9f;
+}
+table.tablesorter tbody tr:nth-child(even) {
+    /*background-color: #e9fae8;*/ /* Coloured background on alternate rows, but hover doesn't work if on*/
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+table.tablesorter tbody tr
+{
+    /*background-color: #e9fae8;*/
+    background-color: #eeeeee;
+}
+table.tablesorter tbody td
+{
+    border: 1px solid white;
+}
+table.tablesorter tr:hover {
+    /*background: #fbf8e9; */
+    background: #ffffff;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;     
+}
+table.tablesorter td.number {
+   text-align: right;
+   color: black;
+}

@@ -1,0 +1,705 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <meta http-equiv="Content-Style-Type" content="text/css"/>
+      <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+      <meta name="Author" content="Office for National Statistics (Neil Sillitoe)"/>
+      <meta name="Date" content="19/11/2013 00:00:00 AM"/>
+      <meta name="DC.Format" content="text/html"/>
+      <meta name="DC.Language" scheme="ISO 639-2/T" content="eng"/>
+      <meta name="DC.Language" scheme="ISO 639-2/T" content="cym"/>
+      <title>ONS Area Profile Generator (V5.9.1 Beta)</title>
+      <!-- opensource libraries -->
+      <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+      <script src="js/jquery.cookie.js" type="text/javascript"></script>
+      <script src="js/jquery.hotkeys.js" type="text/javascript"></script>
+      <script src="js/jquery.jstree.js" type="text/javascript"></script>
+      <script src="js/syntax/jstree_script.js" type="text/javascript"></script>
+      <script src="js/tablesorter.js" type="text/javascript"></script>
+      <!-- downloadify allows saving to filesetore via Flash, currently disabled -->     
+      <!--  to enable add tag for downloadify/js/swfobject.js -->
+      <!--  to enable add tag for downloadify/js/downloadify.min.js -->
+      <!-- ONS utility libraries -->
+      <script src="js/profile_utils.js" type="text/javascript"></script>
+      <script src="js/area_utils.js" type="text/javascript"></script>
+      <script src="js/generate.js" type="text/javascript"></script>
+      <script src="js/chart_utils.js" type="text/javascript"></script>
+      <!-- Mapping -->
+      <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;region=GB" type="text/javascript"></script>
+      <script src="js/mapping_utils.js" type="text/javascript"></script>
+      <!-- Stylesheets -->
+      <link href="css/jstree_style.css" rel="stylesheet" type="text/css"/>
+      <link href="css/main.css" rel="stylesheet" type="text/css" />
+      <link href="css/style.css" rel="stylesheet" type="text/css" />
+      <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
+      <link class="include" href="css/jquery.jqplot.min.css" rel="stylesheet" type="text/css" />
+
+      <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="js/excanvas.js"></script><![endif]-->
+   
+ 	<script  type="text/javascript">
+	/* uncomment to enable downloadify (also td with id=downloadify containing save button)	
+	function makebutton(filename,format){
+		Downloadify.create('downloadify',{
+			filename: filename + '.' + format,
+			data: function(){ 
+			return document.getElementById('codeTextArea').value;
+			},
+			onComplete: function(){ alert('File saved'); },
+			onCancel: function(){ alert('Save cancelled'); },
+			onError: function(){ alert('Save failed - possibly no content'); },
+			swf: 'downloadify/media/downloadify.swf',
+			downloadImage: 'downloadify/images/save.png',
+			width: 49,
+			height: 22,
+			transparent: false,
+			append: false
+		});
+	}
+	*/	
+	</script>
+
+  </head>
+   <body>
+   <div id="onslogo" class="" >
+   <img src="img/ons_logo_white_transparent.gif" alt="ons logo"/>
+   </div>
+      <h1 class="title">Area Profile Generator (V5.9.1 Beta)</h1>
+      <div id="areaHead">
+     <h3> 1. Select an area at Region level or below</h3> 
+       <div id="areaTree" class="demo_init">
+      </div>  
+      </div>
+      <div id="contentHead">
+       <h3>2. Select the items to include in your profile</h3> 
+      <div id="areaChosen" class="">
+         <span style="white-space: nowrap;">
+            <label class="areaCode_label" for="areaCode">Chosen area code:&nbsp;</label><input id="areaCode" type="text" value="" size="8"/>
+         </span>
+         &nbsp;&nbsp;
+         <span style="white-space: nowrap;">
+            <label class="lbl_A" for="areaName">name:&nbsp;</label><input id="areaName" type="text" value="" size="28" readonly="readonly"/>
+         </span>
+         &nbsp;
+         <span style="white-space: nowrap;">
+            <label class="lbl_A" for="areaType">type:&nbsp;</label><input id="areaType" type="text" value="" size="2"/><br/>
+         </span>
+         <span style="white-space: nowrap;">
+            <label class="parentAreaCode_label" for="parentAreaCode">Parent area code:&nbsp;</label><input id="parentAreaCode" type="text" value="" size="8"/>
+         </span>
+         &nbsp;&nbsp;
+         <span style="white-space: nowrap;">
+            <label class="lbl_A" for="parentAreaName">name:&nbsp;</label><input id="parentAreaName" type="text" value="" size="28" readonly="readonly"/>
+         </span>
+         &nbsp;
+         <span style="white-space: nowrap;">
+            <label class="lbl_A" for="parentAreaType">type:&nbsp;</label><input id="parentAreaType" type="text" value="" size="2"/><br/>
+         </span>
+         <span style="white-space: nowrap;">
+            <label class="lbl_A" for="language">Hierarchy:</label>&nbsp;
+            <select id="hierarchy" name="hierarchy" onchange="repopulate();resetPageProfile();clearProfiles();" title="Change hierarchy">
+               <option style="color:black" value="2011WARDH">Ward</option>
+               <option style="color:black" value="2011PCONH">Parliamentary Constituency</option>
+            </select>
+         </span>
+         <span style="white-space: nowrap;">
+            <label class="lbl_A" for="language">Language:</label>&nbsp;
+            <select id="language" name="language" onchange="repopulate();resetPageProfile();clearProfiles();" title="Changes area tree and tables to display in English or Welsh (where available)">
+               <option style="color:black" value="0">English</option>
+               <option style="color:black" value="1">Welsh</option>
+            </select>
+         </span>
+
+         <ul>
+             <li id="Map">
+               <span style="white-space: nowrap;">
+                  <label class="profile_label_map">Boundary Map</label>
+                  <input type="checkbox" id="showMap" name="showMap" value="showMap" title="select to produce a boundary map for selected area and its' parent area" /><label class="lbl_selections_enabled" for="showMap">Boundary Map</label>&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>
+            </li>
+            <li id="Demography">
+            <label class="profile_label"><span class="twistie" id="demoglink" onclick="toggle_visibility('demog');" title="click to expand/contract category">+</span> Demography</label>
+               <ul class="datalist" id="demog">
+                  <li id="Population_Density">
+                     <label class="profile_sublabel_disabled">Population Density</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table0" name="table0" value="T0" title="select to produce table for population density - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table0">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart0" name="chart0" value="2" title="select to produce bar chart for population density - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart0">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li id="Age_Profile">
+                     <label class="profile_sublabel">Age Profile</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table1" name="table1" value="T0" title="select to produce table for age profile"/>
+                        <label class="lbl_selections_enabled" for="table1">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart1" name="chart1" value="2" title="select to produce bar chart for age profile"/>
+                        <label class="lbl_selections_enabled" for="chart1">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li id="Marital_Status">
+                     <label class="profile_sublabel_disabled">Marital Status</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table2" name="table2" value="T0" title="select to produce table for marital status - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table2">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart2" name="chart2" value="2" title="select to produce bar chart for marital status - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart2">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+               </ul>
+            </li>
+            <li id="EILR">
+                        <label class="profile_label"><span class="twistie" id="eilrlink" onclick="toggle_visibility('eilr');" title="click to expand/contract category">+</span> Ethnicity, Identity, Language and Religion (EILR)</label>
+               <ul class="datalist" id="eilr">
+                  <li>
+                  <label class="profile_sublabel">Ethnic Group</label>
+                  <span style="white-space: nowrap;">
+                     <input type="checkbox" id="table3" name="table3" value="T0" title="select to produce table for ethnic group" />
+                     <label class="lbl_selections_enabled" for="table3">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span style="white-space: nowrap;">
+                     <input type="checkbox" id="chart3" name="chart3" value="2" title="select to produce bar chart for ethnic group" />
+                     <label class="lbl_selections_enabled" for="chart3">Bar Chart</label>&nbsp;
+                     <!--
+                     <select name="chart0" id="chart0">
+                        <option value="0">None</option>
+                        <option value="1">Line chart</option>
+                        <option value="2">Bar chart</option>
+                        <option value="3">Doughnut chart</option>
+                     </select>
+                     -->
+                  </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel_disabled">Religion</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table4" name="table4" value="T0" title="select to produce table for religion - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table4">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart4" name="chart4" value="2" title="select to produce bar chart for religion - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart4">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+               </ul>
+            </li>
+            <li id="Migration">
+                                    <label class="profile_label"><span class="twistie" id="miglink" onclick="toggle_visibility('mig');" title="click to expand/contract category">+</span> Migration</label>
+               <ul class="datalist" id="mig">
+                  <li>
+                     <label class="profile_sublabel_disabled">Country of Birth</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table5" name="table5" value="T0" title="select to produce table for country of birth - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table5">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart5" name="chart5" value="2" title="select to produce bar chart for country of birth - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart5">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                     <!--
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="summary0" name="summary0" class="hide" value="S0"/><label id="labSummary0" class="hide" for="summary0">Age Bands</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     -->
+                  </li>
+                  <li>
+                     <label class="profile_sublabel_disabled">Passports Held</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table6" name="table6" value="T0" title="select to produce table for passports held - currently unavailable" disabled="disabled" />
+                        <label class="lbl_selections_disabled" for="table6">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart6" name="chart6" value="2" title="select to produce bar chart for passports held - currently unavailable" disabled="disabled" />
+                        <label class="lbl_selections_disabled" for="chart6">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                     <!--
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="summary0" name="summary0" class="hide" value="S0"/><label id="labSummary0" class="hide" for="summary0">Age Bands</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     -->
+                  </li>
+               </ul>
+            </li>
+            <li id="Health">
+                                    <label class="profile_label"><span class="twistie" id="healthlink" onclick="toggle_visibility('health');" title="click to expand/contract category">+</span> Health</label>
+               <ul class="datalist" id="health">
+                  <li>
+                     <label class="profile_sublabel">General Health</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table7" name="table7" value="T0" title="select to produce table for general health" />
+                        <label class="lbl_selections" for="table7">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart7" name="chart7" value="2" title="select to produce bar chart for general health" />
+                        <label class="lbl_selections" for="chart7">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                     <!--
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="summary0" name="summary0" class="hide" value="S0"/><label id="labSummary0" class="hide" for="summary0">Age Bands</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     -->
+                  </li>
+                  <li>
+                     <label class="profile_sublabel">Unpaid care</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table8" name="table8" value="T0" title="select to produce table for unpaid care" />
+                        <label class="lbl_selections_enabled" for="table8">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart8" name="chart8" value="2" title="select to produce bar chart for unpaid care" />
+                        <label class="lbl_selections_enabled" for="chart8">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart0" id="chart0">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                     <!--
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="summary0" name="summary0" class="hide" value="S0"/><label id="labSummary0" class="hide" for="summary0">Age Bands</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     -->
+                  </li>
+               </ul>
+            </li>
+            <li id="Housing">
+                                    <label class="profile_label"><span class="twistie" id="housinglink" onclick="toggle_visibility('housing');" title="click to expand/contract category">+</span> Housing</label>
+               <ul class="datalist" id="housing">
+                  <li>
+                     <label class="profile_sublabel">Accommodation Type</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table9" name="table9" value="T2" title="select to produce table for accommodation type" />
+                        <label class="lbl_selections" for="table9">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart9" name="chart9" value="2" title="select to produce bar chart for accommodation type" />
+                        <label class="lbl_selections" for="chart9">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart2" id="chart2">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel">Tenure</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table10" name="table10" value="T2" title="select to produce table for tenure" />
+                        <label class="lbl_selections_enabled" for="table10">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart10" name="chart10" value="2" title="select to produce bar chart for tenure" />
+                        <label class="lbl_selections_enabled" for="chart10">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart2" id="chart2">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel_disabled">Car or van availability</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table11" name="table11" value="T2" title="select to produce table for car or van availability - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table11">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart11" name="chart11" value="2" title="select to produce bar chart for car or van availability - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart11">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart2" id="chart2">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel">Household size</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table12" name="table12" value="T2" title="select to produce table for household size" />
+                        <label class="lbl_selections" for="table12">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart12" name="chart12" value="2" title="select to produce bar chart for household size" />
+                        <label class="lbl_selections" for="chart12">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart2" id="chart2">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+               </ul>
+            </li>
+            <li id="Labour_Market">
+                                    <label class="profile_label"><span class="twistie" id="labourlink" onclick="toggle_visibility('labour');" title="click to expand/contract category">+</span> Labour Market</label>
+               <ul class="datalist" id="labour">
+                  <li>
+                     <label class="profile_sublabel">Economic Activity</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table13" name="table13" value="T1" title="select to produce table for economic activity" />
+                        <label class="lbl_selections_enabled" for="table13">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart13" name="chart13" value="2" title="select to produce bar chart for economic activity" />
+                        <label class="lbl_selections_enabled" for="chart13">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart1" id="chart1">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel_disabled">Industry</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table14" name="table14" value="T1" title="select to produce table for industry - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table14">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart14" name="chart14" value="2" title="select to produce bar chart for industry - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart14">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart1" id="chart1">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel">National Statistics Socio-economic Classification (NS-SeC)</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table15" name="table15" value="T1" title="select to produce table for National Statistics Socio-economic Classification (NS-SeC)" />
+                        <label class="lbl_selections" for="table15">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart15" name="chart15" value="2" title="select to produce bar chart for National Statistics Socio-economic Classification (NS-SeC)" />
+                        <label class="lbl_selections" for="chart15">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart1" id="chart1">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+                  <li>
+                     <label class="profile_sublabel_disabled">Occupation</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table16" name="table16" value="T1" title="select to produce table for occupation - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="table16">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart16" name="chart16" value="2" title="select to produce bar chart for occupation - currently unavailable" disabled="disabled"/>
+                        <label class="lbl_selections_disabled" for="chart16">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart1" id="chart1">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+               </ul>
+            </li>
+            <li id="Travel_to_Work">
+                                    <label class="profile_label"><span class="twistie" id="travellink" onclick="toggle_visibility('travel');" title="click to expand/contract category">+</span> Travel To Work</label>
+               <ul class="datalist" id="travel">
+                  <li>
+                     <label class="profile_sublabel">Method of travel to Work</label>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="table17" name="table17" value="T3" title="select to produce table for method of travel to work" />
+                        <label class="lbl_selections_enabled" for="table17">Table</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </span>
+                     <span style="white-space: nowrap;">
+                        <input type="checkbox" id="chart17" name="chart17" value="2" title="select to produce bar chart for method of travel to work" />
+                        <label class="lbl_selections_enabled" for="chart17">Bar Chart</label>&nbsp;
+                        <!--
+                        <select name="chart3" id="chart3">
+                           <option value="0">None</option>
+                           <option value="1">Line chart</option>
+                           <option value="2">Bar chart</option>
+                           <option value="3">Doughnut chart</option>
+                        </select>
+                        -->
+                     </span>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+         <h3>3. Press Preview to test your profile</h3>
+         <p  style="padding-bottom:0px">This will retrieve data from the ONS OpenAPI for your chosen statistics. A table/chart is displayed for your chosen area, its parent area and England and Wales levels. A table is also displayed for your selected area's children, if any. &nbsp;<input type="button" id="preview" value="Preview" /></p>
+          <h3>4. Press Generate Page to produce the html code for the web page you have previewed</h3>
+          <p style="padding-bottom:5px"> The code will appear in a text box below.<input type="button" id="generate" disabled value="Generate Page" />							<tr>
+								</p>
+</div>
+         <div id="codebox">
+          <h3>5. Copy and paste this code into an html file with runtime libraries</h3>
+	<!--  <table><tr><td id="downloadify"><img src="img/save_disabled.gif"></td></tr></table> -->
+         <textarea id="codeTextArea" rows="24">code to go here</textarea>
+         </div>
+      </div>
+      <div id="results">
+         <h2 class="title" id="maintitle"> Area Profile Preview</h2>
+         <div id="mapTitle"></div>
+         <div id="map"></div>
+         <div id="profile0"></div>
+         <div id="enclose0">
+            <div class="tables" id="tableProfile0_0_0_VIS"></div>
+            <div class="tables" id="tableProfile0_0_1_HID"></div>
+            <div class="tables" id="tableProfile0_1_0_VIS"></div>
+            <div class="tables" id="tableProfile0_1_1_HID"></div>
+            <div class="charts" id="chartProfile0_0"></div>
+            <div class="charts" id="chartProfile0_1"></div>
+         </div>
+         <div id="enclose1">
+            <div class="tables" id="tableProfile1_0_0_VIS"></div>
+            <div class="tables" id="tableProfile1_0_1_HID"></div>
+            <div class="tables" id="tableProfile1_1_0_VIS"></div>
+            <div class="tables" id="tableProfile1_1_1_HID"></div>
+            <div class="charts" id="chartProfile1_0"></div>
+            <div class="charts" id="chartProfile1_1"></div>
+         </div>
+         <div id="enclose2">
+            <div class="tables" id="tableProfile2_0_0_VIS"></div>
+            <div class="tables" id="tableProfile2_0_1_HID"></div>
+            <div class="tables" id="tableProfile2_1_0_VIS"></div>
+            <div class="tables" id="tableProfile2_1_1_HID"></div>
+            <div class="charts" id="chartProfile2_0"></div>
+            <div class="charts" id="chartProfile2_1"></div>
+         </div>
+
+         <div id="profile1"></div>
+         <div id="enclose3">
+            <div class="tables" id="tableProfile3_0_0_VIS"></div>
+            <div class="tables" id="tableProfile3_0_1_HID"></div>
+            <div class="tables" id="tableProfile3_1_0_VIS"></div>
+            <div class="tables" id="tableProfile3_1_1_HID"></div>
+            <div class="charts" id="chartProfile3_0"></div>
+            <div class="charts" id="chartProfile3_1"></div>
+         </div>
+         <div id="enclose4">
+            <div class="tables" id="tableProfile4_0_0_VIS"></div>
+            <div class="tables" id="tableProfile4_0_1_HID"></div>
+            <div class="tables" id="tableProfile4_1_0_VIS"></div>
+            <div class="tables" id="tableProfile4_1_1_HID"></div>
+            <div class="charts" id="chartProfile4_0"></div>
+            <div class="charts" id="chartProfile4_1"></div>
+         </div>
+
+         <div id="profile2"></div>
+         <div id="enclose5">
+            <div class="tables" id="tableProfile5_0_0_VIS"></div>
+            <div class="tables" id="tableProfile5_0_1_HID"></div>
+            <div class="tables" id="tableProfile5_1_0_VIS"></div>
+            <div class="tables" id="tableProfile5_1_1_HID"></div>
+            <div class="charts" id="chartProfile5_0"></div>
+            <div class="charts" id="chartProfile5_1"></div>
+         </div>
+         <div id="enclose6">
+            <div class="tables" id="tableProfile6_0_0_VIS"></div>
+            <div class="tables" id="tableProfile6_0_1_HID"></div>
+            <div class="tables" id="tableProfile6_1_0_VIS"></div>
+            <div class="tables" id="tableProfile6_1_1_HID"></div>
+            <div class="charts" id="chartProfile6_0"></div>
+            <div class="charts" id="chartProfile6_1"></div>
+         </div>
+
+         <div id="profile3"></div>
+         <div id="enclose7">
+            <div class="tables" id="tableProfile7_0_0_VIS"></div>
+            <div class="tables" id="tableProfile7_0_1_HID"></div>
+            <div class="tables" id="tableProfile7_1_0_VIS"></div>
+            <div class="tables" id="tableProfile7_1_1_HID"></div>
+            <div class="charts" id="chartProfile7_0"></div>
+            <div class="charts" id="chartProfile7_1"></div>
+         </div>
+         <div id="enclose8">
+            <div class="tables" id="tableProfile8_0_0_VIS"></div>
+            <div class="tables" id="tableProfile8_0_1_HID"></div>
+            <div class="tables" id="tableProfile8_1_0_VIS"></div>
+            <div class="tables" id="tableProfile8_1_1_HID"></div>
+            <div class="charts" id="chartProfile8_0"></div>
+            <div class="charts" id="chartProfile8_1"></div>
+         </div>
+
+         <div id="profile4"></div>
+         <div id="enclose9">
+            <div class="tables" id="tableProfile9_0_0_VIS"></div>
+            <div class="tables" id="tableProfile9_0_1_HID"></div>
+            <div class="tables" id="tableProfile9_1_0_VIS"></div>
+            <div class="tables" id="tableProfile9_1_1_HID"></div>
+            <div class="charts" id="chartProfile9_0"></div>
+            <div class="charts" id="chartProfile9_1"></div>
+         </div>
+         <div id="enclose10">
+            <div class="tables" id="tableProfile10_0_0_VIS"></div>
+            <div class="tables" id="tableProfile10_0_1_HID"></div>
+            <div class="tables" id="tableProfile10_1_0_VIS"></div>
+            <div class="tables" id="tableProfile10_1_1_HID"></div>
+            <div class="charts" id="chartProfile10_0"></div>
+            <div class="charts" id="chartProfile10_1"></div>
+         </div>
+         <div id="enclose11">
+            <div class="tables" id="tableProfile11_0_0_VIS"></div>
+            <div class="tables" id="tableProfile11_0_1_HID"></div>
+            <div class="tables" id="tableProfile11_1_0_VIS"></div>
+            <div class="tables" id="tableProfile11_1_1_HID"></div>
+            <div class="charts" id="chartProfile11_0"></div>
+            <div class="charts" id="chartProfile11_1"></div>
+         </div>
+         <div id="enclose12">
+            <div class="tables" id="tableProfile12_0_0_VIS"></div>
+            <div class="tables" id="tableProfile12_0_1_HID"></div>
+            <div class="tables" id="tableProfile12_1_0_VIS"></div>
+            <div class="tables" id="tableProfile12_1_1_HID"></div>
+            <div class="charts" id="chartProfile12_0"></div>
+            <div class="charts" id="chartProfile12_1"></div>
+         </div>
+
+         <div id="profile5"></div>
+         <div id="enclose13">
+            <div class="tables" id="tableProfile13_0_0_VIS"></div>
+            <div class="tables" id="tableProfile13_0_1_HID"></div>
+            <div class="tables" id="tableProfile13_1_0_VIS"></div>
+            <div class="tables" id="tableProfile13_1_1_HID"></div>
+            <div class="charts" id="chartProfile13_0"></div>
+            <div class="charts" id="chartProfile13_1"></div>
+         </div>
+         <div id="enclose14">
+            <div class="tables" id="tableProfile14_0_0_VIS"></div>
+            <div class="tables" id="tableProfile14_0_1_HID"></div>
+            <div class="tables" id="tableProfile14_1_0_VIS"></div>
+            <div class="tables" id="tableProfile14_1_1_HID"></div>
+            <div class="charts" id="chartProfile14_0"></div>
+            <div class="charts" id="chartProfile14_1"></div>
+         </div>
+         <div id="enclose15">
+            <div class="tables" id="tableProfile15_0_0_VIS"></div>
+            <div class="tables" id="tableProfile15_0_1_HID"></div>
+            <div class="tables" id="tableProfile15_1_0_VIS"></div>
+            <div class="tables" id="tableProfile15_1_1_HID"></div>
+            <div class="charts" id="chartProfile15_0"></div>
+            <div class="charts" id="chartProfile15_1"></div>
+         </div>
+         <div id="enclose16">
+            <div class="tables" id="tableProfile16_0_0_VIS"></div>
+            <div class="tables" id="tableProfile16_0_1_HID"></div>
+            <div class="tables" id="tableProfile16_1_0_VIS"></div>
+            <div class="tables" id="tableProfile16_1_1_HID"></div>
+            <div class="charts" id="chartProfile16_0"></div>
+            <div class="charts" id="chartProfile16_1"></div>
+         </div>
+
+         <div id="profile6"></div>
+         <div id="enclose17">
+            <div class="tables" id="tableProfile17_0_0_VIS"></div>
+            <div class="tables" id="tableProfile17_0_1_HID"></div>
+            <div class="tables" id="tableProfile17_1_0_VIS"></div>
+            <div class="tables" id="tableProfile17_1_1_HID"></div>
+            <div class="charts" id="chartProfile17_0"></div>
+            <div class="charts" id="chartProfile17_1"></div>
+         </div>
+      </div>
+
+      <script src="js/jquery.jqplot.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.barRenderer.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.categoryAxisRenderer.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.pointLabels.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.canvasAxisTickRenderer.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.canvasTextRenderer.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.canvasAxisLabelRenderer.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.highlighter.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.pieRenderer.min.js" type="text/javascript"></script>
+      <script src="js/jqplot.donutRenderer.min.js" type="text/javascript"></script>
+
+   </body>
+</html>

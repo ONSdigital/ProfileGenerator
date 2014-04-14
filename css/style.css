@@ -1,0 +1,74 @@
+/*
+ * The stylesheet for the HTML5/CSS3 example.
+ * This stylesheet is used in conjuntion with
+ * the tablesorter plug-in to allow dynamic
+ * re-ordering of the html table produced.
+ */
+
+/* tables */
+table.tablesorter {
+ font-family:arial;
+ /*background-color: #EEEEEE; */
+ margin:10px 0pt 15px;
+ /*font-size: 8pt;*/
+ font-size: 0.8em;
+ /*width: 80%;*/
+ text-align: left;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+ /*background-color: #c8f2c7;*/
+ background-color:#ADD8E6;
+ border: 1px solid #FFF;
+ /*font-size: 8pt;*/
+ padding: 0.3em;
+/*padding-right: 0.8em;*/
+}
+table.tablesorter thead tr th {
+ min-width: 60px;
+}
+table.tablesorter thead tr .header {
+/* background-image: url(../img/bg.gif); */
+ background-image: none;
+ background-repeat: no-repeat;
+/* background-position: right top;
+/* background-position: 103% 95%;*/
+ background-position: 103% 6%;
+ cursor: pointer;
+}
+table.tablesorter thead tr .headerSortUp {
+ background-image: url(../img/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+ background-image: url(../img/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #a1cc9f;
+}
+table.tablesorter tbody tr:nth-child(even) {
+    /*background-color: #e9fae8;*/ /* Coloured background on alternate rows, but hover doesn't work if on*/
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+table.tablesorter tbody tr
+{
+    /*background-color: #e9fae8;*/
+    background-color: #eeeeee;
+}
+table.tablesorter tbody td
+{
+    border: 1px solid white;
+}
+table.tablesorter tr:hover {
+    /*background: #fbf8e9; */
+    background: #ffffff;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;     
+}
+table.tablesorter td.number {
+   text-align: right;
+   color: black;
+}

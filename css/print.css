@@ -1,0 +1,38 @@
+﻿/* Override some properties for print friendly */
+
+
+.charts {
+   width: 100%;
+   margin-left: 70px;
+   margin-right: 70px;
+   page-break-inside: avoid; 
+}
+
+#map {
+   width: 600px;
+   height: 600px;
+   border: 1px solid black;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+
+input { 
+
+display:none;
+
+}
+
+table th tr td {
+font-size:7pt;
+}
+
+.tablesorter{
+   page-break-inside: avoid; 
+}
+
+.tables{
+   page-break-inside: avoid; 
+}
+
+
