@@ -30,8 +30,7 @@
   * Author: Neil Sillitoe for Office for National Statistics
   */
 
- var endpointAreaLIVE = "http://www.onstest.statistics.gov.uk/ons/api/data/hierarchy/";
-//var endpointAreaLIVE = "http://data.ons.gov.uk/ons/api/data/hierarchy/";
+ var endpointAreaLIVE = "http://data.ons.gov.uk/ons/api/data/hierarchy/";
 // API_KEY picked up from profile_utils
 
 // Context (census, economic, etc)

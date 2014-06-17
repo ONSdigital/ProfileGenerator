@@ -23,9 +23,9 @@ var environment = ENV_LIVE;    //#
 //                             //#
 //################################
 
-var endpointProfileLIVE = "http://www.onstest.statistics.gov.uk/ons/api/data/dataset/";
+var endpointProfileLIVE = "http://data.ons.gov.uk/ons/api/data/dataset/";
 
-var apiKeyLIVE = "[ADD YOUR API KEY HERE]";
+var apiKeyLIVE = "0YOH4UDkTJ";
 
 // 2011WARDH on Live
 // Demography
