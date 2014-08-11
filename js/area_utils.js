@@ -30,7 +30,7 @@
   * Author: Neil Sillitoe for Office for National Statistics
   */
 
- var endpointAreaLIVE = "http://data.ons.gov.uk/ons/api/data/hierarchy/";
+var endpointAreaLIVE = "http://data.ons.gov.uk/ons/api/data/hierarchy/";
 // API_KEY picked up from profile_utils
 
 // Context (census, economic, etc)
@@ -40,7 +40,8 @@ var context = "?context=Census";
 var hierarchy = "&geog=";
 
 // Get top level areas to initially populate area tree with
-var filterTopLevelAreas = "&parent=&levels=0"; //top level
+var filterTopLevelAreas = "&parent=&levels="; //top level
+var filterTopLevelAreaNum = 2;
 
 // Get areas under a specific parent area
 var filterSubAreas = "/parent/";
@@ -156,7 +157,14 @@ function getAreaData(parentCode, fetchChildAreas)
 
    if(parentCode == null)
    {
-      filterToUse = datasetId + formatJSON + context + "&apikey=" + eval("apiKey" + environment) + hierarchy + hierarchyId + filterTopLevelAreas;
+   if (hierarchyId == "2011WARDH"){
+	filterTopLevelAreaNum = 2
+   }  
+   if (hierarchyId == "2011PCONH"){
+	filterTopLevelAreaNum = 0
+   }  
+
+   filterToUse = datasetId + formatJSON + context + "&apikey=" + eval("apiKey" + environment) + hierarchy + hierarchyId + filterTopLevelAreas + filterTopLevelAreaNum;
       initialiseTree = true;
    }
    else
@@ -236,7 +244,7 @@ function getDataArea(filt)
 {
    var url = eval("endpointArea" + environment) + filt;
 
-   //alert('data area url = ' + url);
+  // alert('data area url = ' + url);
    var data;
 
    //jQuery.support.cors = true;

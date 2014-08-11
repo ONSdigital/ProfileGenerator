@@ -18,14 +18,14 @@ var firstColumn = [];
 
 //################################
 //    Current Environment        #
-//							   //#
+//var environment = ENV_PREPROD; //#
 var environment = ENV_LIVE;    //#
 //                             //#
 //################################
 
 var endpointProfileLIVE = "http://data.ons.gov.uk/ons/api/data/dataset/";
 
-var apiKeyLIVE = "0YOH4UDkTJ";
+var apiKeyLIVE = "YOUR_KEY_HERE";
 
 // 2011WARDH on Live
 // Demography
